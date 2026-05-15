@@ -1,0 +1,1631 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>福岡親子 7 日 · 2026/9/19 — 9/25</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@300;400;500;700&family=Yuji+Syuku&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="" defer></script>
+<style>
+  :root{
+    --paper:#f5efe4;
+    --paper-2:#ede4d3;
+    --ink:#1c1f2e;
+    --ink-soft:#3d4255;
+    --muted:#6f6a5e;
+    --indigo:#2d4a7c;
+    --indigo-deep:#1a2c4d;
+    --vermillion:#c1432b;
+    --vermillion-soft:#d9694e;
+    --gold:#b88c3a;
+    --moss:#5a6b3a;
+    --line:rgba(28,31,46,0.12);
+    --shadow: 0 1px 2px rgba(28,31,46,0.04), 0 8px 24px rgba(28,31,46,0.06);
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Noto Sans TC', 'Shippori Mincho', sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.7;
+    font-weight:400;
+    background-image:
+      radial-gradient(circle at 0% 0%, rgba(193,67,43,0.04) 0, transparent 40%),
+      radial-gradient(circle at 100% 100%, rgba(45,74,124,0.05) 0, transparent 40%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.11 0 0 0 0 0.12 0 0 0 0 0.18 0 0 0 0.04 0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .display{font-family:'Shippori Mincho', serif;letter-spacing:-0.01em}
+  .jp{font-family:'Yuji Syuku', 'Shippori Mincho', serif}
+
+  /* ========== HERO ========== */
+  .hero{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    padding:32px clamp(20px, 5vw, 64px);
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:'';
+    position:absolute;
+    top:50%;
+    right:-200px;
+    width:600px;
+    height:600px;
+    background:radial-gradient(circle, var(--vermillion) 0%, transparent 70%);
+    opacity:0.15;
+    transform:translateY(-50%);
+    pointer-events:none;
+  }
+  .hero::after{
+    content:'';
+    position:absolute;
+    bottom:-300px;
+    left:-200px;
+    width:700px;
+    height:700px;
+    background:radial-gradient(circle, var(--indigo) 0%, transparent 65%);
+    opacity:0.12;
+    pointer-events:none;
+  }
+
+  .top-bar{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    z-index:2;
+    position:relative;
+    font-size:12px;
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+    color:var(--muted);
+  }
+  .top-bar .stamp{
+    border:1px solid var(--vermillion);
+    color:var(--vermillion);
+    padding:6px 12px;
+    border-radius:2px;
+    font-family:'Yuji Syuku', serif;
+    font-size:11px;
+    transform:rotate(-2deg);
+  }
+
+  .hero-main{
+    z-index:2;
+    position:relative;
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    padding:60px 0 40px;
+  }
+  .kicker{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    font-size:13px;
+    letter-spacing:0.3em;
+    color:var(--vermillion);
+    margin-bottom:24px;
+    font-weight:500;
+  }
+  .kicker::before{
+    content:'';
+    width:48px;
+    height:1px;
+    background:var(--vermillion);
+  }
+  .hero h1{
+    font-family:'Shippori Mincho', serif;
+    font-size:clamp(48px, 9vw, 120px);
+    font-weight:800;
+    line-height:0.95;
+    letter-spacing:-0.03em;
+    margin-bottom:24px;
+  }
+  .hero h1 .jp-mark{
+    display:inline-block;
+    font-family:'Yuji Syuku', serif;
+    color:var(--vermillion);
+    font-size:0.5em;
+    vertical-align:super;
+    margin-left:8px;
+    font-weight:400;
+  }
+  .hero .sub{
+    font-family:'Shippori Mincho', serif;
+    font-size:clamp(18px, 2.2vw, 24px);
+    color:var(--ink-soft);
+    max-width:600px;
+    font-style:italic;
+  }
+
+  .meta-grid{
+    z-index:2;
+    position:relative;
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(140px, 1fr));
+    gap:24px;
+    padding-top:32px;
+    border-top:1px solid var(--line);
+  }
+  .meta-item .label{
+    font-size:10px;
+    letter-spacing:0.25em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin-bottom:6px;
+  }
+  .meta-item .value{
+    font-family:'Shippori Mincho', serif;
+    font-size:22px;
+    color:var(--ink);
+    font-weight:600;
+  }
+  .meta-item .value .small{font-size:13px;color:var(--muted);font-weight:400}
+
+  /* ========== OVERVIEW ========== */
+  .overview{
+    padding:80px clamp(20px, 5vw, 64px);
+    max-width:1400px;
+    margin:0 auto;
+  }
+  .section-head{
+    margin-bottom:48px;
+    display:flex;
+    align-items:baseline;
+    gap:20px;
+    flex-wrap:wrap;
+  }
+  .section-head .num{
+    font-family:'Yuji Syuku', serif;
+    font-size:48px;
+    color:var(--vermillion);
+    line-height:1;
+  }
+  .section-head h2{
+    font-family:'Shippori Mincho', serif;
+    font-size:clamp(28px, 4vw, 44px);
+    font-weight:700;
+    line-height:1.1;
+  }
+  .section-head .tag{
+    font-size:11px;
+    letter-spacing:0.25em;
+    text-transform:uppercase;
+    color:var(--muted);
+    padding-left:20px;
+    border-left:1px solid var(--line);
+  }
+
+  .quick-tips{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));
+    gap:16px;
+    margin-bottom:60px;
+  }
+  .tip{
+    background:rgba(255,255,255,0.5);
+    border:1px solid var(--line);
+    padding:20px;
+    border-radius:4px;
+    position:relative;
+    backdrop-filter:blur(8px);
+  }
+  .tip .icon{
+    font-family:'Yuji Syuku', serif;
+    font-size:28px;
+    color:var(--vermillion);
+    margin-bottom:8px;
+    display:block;
+    line-height:1;
+  }
+  .tip .t-title{
+    font-family:'Shippori Mincho', serif;
+    font-size:15px;
+    font-weight:600;
+    margin-bottom:6px;
+  }
+  .tip .t-body{
+    font-size:13px;
+    color:var(--ink-soft);
+    line-height:1.6;
+  }
+
+  /* ========== DAYS ========== */
+  .days{
+    padding:0 clamp(20px, 5vw, 64px) 80px;
+    max-width:1400px;
+    margin:0 auto;
+  }
+
+  /* tab navigation */
+  .tab-nav{
+    display:flex;
+    gap:6px;
+    margin-bottom:48px;
+    padding:8px;
+    background:rgba(255,255,255,0.5);
+    border:1px solid var(--line);
+    border-radius:4px;
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+    backdrop-filter:blur(8px);
+    position:sticky;
+    top:12px;
+    z-index:50;
+    box-shadow:0 4px 20px rgba(28,31,46,0.06);
+  }
+  .tab-nav::-webkit-scrollbar{display:none}
+  .tab-btn{
+    flex:1;
+    min-width:96px;
+    scroll-snap-align:start;
+    padding:12px 14px;
+    background:transparent;
+    border:none;
+    border-radius:2px;
+    cursor:pointer;
+    font-family:'Shippori Mincho', serif;
+    text-align:center;
+    color:var(--muted);
+    transition:all 0.25s ease;
+    position:relative;
+    line-height:1.2;
+  }
+  .tab-btn .tab-day-num{
+    display:block;
+    font-size:11px;
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+    font-weight:500;
+    margin-bottom:4px;
+    opacity:0.7;
+  }
+  .tab-btn .tab-date{
+    display:block;
+    font-size:16px;
+    font-weight:700;
+    color:var(--ink);
+    margin-bottom:2px;
+  }
+  .tab-btn .tab-label{
+    display:block;
+    font-size:11px;
+    color:var(--muted);
+    font-family:'Yuji Syuku', serif;
+  }
+  .tab-btn:hover{
+    background:rgba(193,67,43,0.06);
+  }
+  .tab-btn.is-active{
+    background:var(--ink);
+    color:var(--paper);
+  }
+  .tab-btn.is-active .tab-date{color:var(--paper)}
+  .tab-btn.is-active .tab-day-num{color:var(--vermillion-soft);opacity:1}
+  .tab-btn.is-active .tab-label{color:rgba(245,239,228,0.7)}
+
+  .day{
+    margin-bottom:80px;
+    position:relative;
+    display:none;
+    animation:fadeIn 0.4s ease;
+  }
+  .day.is-active{display:block}
+  @keyframes fadeIn{
+    from{opacity:0;transform:translateY(8px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+
+  /* day map */
+  .day-map-wrap{
+    margin-bottom:36px;
+    border:1px solid var(--line);
+    border-radius:4px;
+    overflow:hidden;
+    background:#eee;
+    box-shadow:var(--shadow);
+    position:relative;
+  }
+  .day-map{
+    width:100%;
+    height:340px;
+    background:#e8e2d3;
+  }
+  .day-map-legend{
+    padding:12px 16px;
+    background:rgba(255,255,255,0.85);
+    border-top:1px solid var(--line);
+    font-size:12px;
+    color:var(--ink-soft);
+    display:flex;
+    align-items:center;
+    gap:12px;
+    flex-wrap:wrap;
+    backdrop-filter:blur(8px);
+  }
+  .day-map-legend .dot{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+  }
+  .day-map-legend .dot::before{
+    content:'';
+    width:12px;
+    height:12px;
+    border-radius:50%;
+    background:var(--vermillion);
+  }
+  .day-map-legend .line::before{
+    content:'';
+    width:20px;
+    height:0;
+    border-top:2px dashed var(--vermillion);
+    border-radius:0;
+    background:transparent;
+  }
+  .day-map-legend .line{display:inline-flex;align-items:center;gap:6px}
+  .day-map-legend .meta{margin-left:auto;font-family:'Shippori Mincho', serif;color:var(--muted);font-size:11px;letter-spacing:0.1em}
+
+  /* custom Leaflet marker */
+  .pin{
+    width:32px;
+    height:32px;
+    border-radius:50% 50% 50% 0;
+    background:var(--vermillion);
+    transform:rotate(-45deg);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--paper);
+    font-family:'Shippori Mincho', serif;
+    font-weight:700;
+    font-size:14px;
+    box-shadow:0 3px 10px rgba(0,0,0,0.25);
+    border:2px solid var(--paper);
+  }
+  .pin span{transform:rotate(45deg)}
+  .pin.start{background:var(--indigo)}
+  .pin.end{background:var(--ink)}
+
+  .leaflet-popup-content-wrapper{
+    border-radius:3px !important;
+    background:var(--paper) !important;
+    box-shadow:0 8px 24px rgba(28,31,46,0.2) !important;
+  }
+  .leaflet-popup-content{
+    margin:12px 16px !important;
+    font-family:'Shippori Mincho', serif !important;
+  }
+  .leaflet-popup-content b{
+    display:block;
+    font-size:15px;
+    margin-bottom:2px;
+    color:var(--ink);
+  }
+  .leaflet-popup-content small{
+    color:var(--muted);
+    font-size:11px;
+    letter-spacing:0.05em;
+  }
+  .leaflet-popup-tip{background:var(--paper) !important}
+  .leaflet-container{font-family:inherit !important}
+
+  /* day navigation footer */
+  .day-nav{
+    display:flex;
+    justify-content:space-between;
+    gap:16px;
+    margin-top:48px;
+    padding-top:32px;
+    border-top:1px solid var(--line);
+  }
+  .day-nav button{
+    flex:1;
+    max-width:280px;
+    padding:16px 20px;
+    background:transparent;
+    border:1px solid var(--ink);
+    border-radius:2px;
+    cursor:pointer;
+    font-family:'Shippori Mincho', serif;
+    text-align:left;
+    color:var(--ink);
+    transition:all 0.2s ease;
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+  }
+  .day-nav button:hover:not(:disabled){
+    background:var(--ink);
+    color:var(--paper);
+  }
+  .day-nav button:disabled{
+    opacity:0.3;
+    cursor:not-allowed;
+  }
+  .day-nav button.next{text-align:right}
+  .day-nav .nav-label{
+    font-size:10px;
+    letter-spacing:0.25em;
+    text-transform:uppercase;
+    color:var(--vermillion);
+  }
+  .day-nav button:hover:not(:disabled) .nav-label{color:var(--vermillion-soft)}
+  .day-nav .nav-title{
+    font-size:15px;
+    font-weight:600;
+  }
+  .day-header{
+    display:grid;
+    grid-template-columns:auto 1fr auto;
+    gap:24px;
+    align-items:start;
+    padding-bottom:24px;
+    margin-bottom:32px;
+    border-bottom:2px solid var(--ink);
+    position:relative;
+  }
+  .day-number{
+    font-family:'Shippori Mincho', serif;
+    line-height:0.9;
+  }
+  .day-number .day-label{
+    font-size:11px;
+    letter-spacing:0.3em;
+    text-transform:uppercase;
+    color:var(--vermillion);
+    margin-bottom:4px;
+    display:block;
+  }
+  .day-number .day-big{
+    font-size:clamp(56px, 10vw, 96px);
+    font-weight:800;
+    color:var(--ink);
+  }
+  .day-number .day-of-week{
+    font-family:'Yuji Syuku', serif;
+    font-size:14px;
+    color:var(--muted);
+    margin-top:4px;
+    display:block;
+  }
+  .day-title{
+    padding-top:14px;
+  }
+  .day-title h3{
+    font-family:'Shippori Mincho', serif;
+    font-size:clamp(24px, 3.5vw, 36px);
+    font-weight:700;
+    line-height:1.2;
+    margin-bottom:10px;
+  }
+  .day-title .narrative{
+    font-size:14px;
+    color:var(--ink-soft);
+    max-width:560px;
+    font-style:italic;
+    font-family:'Shippori Mincho', serif;
+  }
+  .day-date{
+    text-align:right;
+    padding-top:14px;
+  }
+  .day-date .date-mm{
+    font-family:'Shippori Mincho', serif;
+    font-size:32px;
+    font-weight:700;
+    line-height:1;
+  }
+  .day-date .date-jp{
+    font-family:'Yuji Syuku', serif;
+    font-size:14px;
+    color:var(--vermillion);
+    margin-top:4px;
+  }
+
+  /* timeline */
+  .timeline{
+    display:flex;
+    flex-direction:column;
+    gap:0;
+    position:relative;
+  }
+  .timeline::before{
+    content:'';
+    position:absolute;
+    left:80px;
+    top:20px;
+    bottom:20px;
+    width:1px;
+    background:linear-gradient(to bottom, var(--vermillion) 0%, var(--indigo) 100%);
+    opacity:0.3;
+  }
+
+  .stop{
+    display:grid;
+    grid-template-columns:80px 1fr;
+    gap:32px;
+    padding:20px 0;
+    position:relative;
+  }
+  .stop-time{
+    text-align:right;
+    padding-top:6px;
+    position:relative;
+  }
+  .stop-time .hh{
+    font-family:'Shippori Mincho', serif;
+    font-size:22px;
+    font-weight:700;
+    line-height:1;
+    letter-spacing:-0.02em;
+  }
+  .stop-time .dur{
+    font-size:11px;
+    color:var(--muted);
+    margin-top:6px;
+    letter-spacing:0.1em;
+  }
+  .stop-time::after{
+    content:'';
+    position:absolute;
+    top:14px;
+    right:-7px;
+    width:13px;
+    height:13px;
+    background:var(--paper);
+    border:2px solid var(--vermillion);
+    border-radius:50%;
+    z-index:2;
+    transform:translateX(50%);
+  }
+  .stop.is-major .stop-time::after{
+    background:var(--vermillion);
+    box-shadow:0 0 0 4px rgba(193,67,43,0.15);
+  }
+
+  .stop-card{
+    background:rgba(255,255,255,0.7);
+    border:1px solid var(--line);
+    border-radius:4px;
+    padding:22px 26px;
+    transition:all 0.25s ease;
+    position:relative;
+    overflow:hidden;
+  }
+  .stop-card::before{
+    content:'';
+    position:absolute;
+    left:0;
+    top:0;
+    bottom:0;
+    width:3px;
+    background:var(--vermillion);
+    transform:scaleY(0);
+    transition:transform 0.3s ease;
+    transform-origin:top;
+  }
+  .stop-card:hover{
+    transform:translateY(-2px);
+    box-shadow:var(--shadow);
+    border-color:rgba(193,67,43,0.3);
+  }
+  .stop-card:hover::before{transform:scaleY(1)}
+
+  .stop-head{
+    display:flex;
+    align-items:baseline;
+    gap:12px;
+    margin-bottom:8px;
+    flex-wrap:wrap;
+  }
+  .stop-name{
+    font-family:'Shippori Mincho', serif;
+    font-size:20px;
+    font-weight:700;
+    color:var(--ink);
+    letter-spacing:-0.01em;
+  }
+  .stop-type{
+    font-size:10px;
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+    padding:3px 8px;
+    border-radius:2px;
+    background:var(--paper-2);
+    color:var(--ink-soft);
+  }
+  .stop-type.shrine{background:#f4dcd0;color:var(--vermillion)}
+  .stop-type.park{background:#dde6cf;color:var(--moss)}
+  .stop-type.shop{background:#d8dfeb;color:var(--indigo)}
+  .stop-type.museum{background:#ead7c4;color:var(--gold)}
+  .stop-type.food{background:#eed4d4;color:var(--vermillion)}
+  .stop-type.fun{background:#e8d9eb;color:#7a4a8a}
+
+  .stop-notes{
+    font-size:14px;
+    color:var(--ink-soft);
+    line-height:1.65;
+    margin-bottom:14px;
+  }
+
+  .stop-actions{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  .map-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:7px 14px;
+    font-size:12px;
+    font-weight:500;
+    letter-spacing:0.05em;
+    color:var(--indigo);
+    background:transparent;
+    border:1px solid var(--indigo);
+    border-radius:2px;
+    text-decoration:none;
+    transition:all 0.2s ease;
+  }
+  .map-btn:hover{
+    background:var(--indigo);
+    color:var(--paper);
+  }
+  .map-btn svg{width:13px;height:13px}
+
+  /* ========== TRANSPORT NOTES ========== */
+  .transport{
+    background:var(--ink);
+    color:var(--paper);
+    padding:80px clamp(20px, 5vw, 64px);
+    margin-top:60px;
+  }
+  .transport-inner{
+    max-width:1400px;
+    margin:0 auto;
+  }
+  .transport h2{
+    font-family:'Shippori Mincho', serif;
+    font-size:clamp(28px, 4vw, 44px);
+    font-weight:700;
+    margin-bottom:40px;
+  }
+  .transport h2 .jp-mark{
+    font-family:'Yuji Syuku', serif;
+    color:var(--vermillion-soft);
+    font-size:0.55em;
+    margin-left:12px;
+  }
+  .transport-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+    gap:24px;
+  }
+  .transport-card{
+    padding:24px;
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.1);
+    border-radius:4px;
+  }
+  .transport-card h4{
+    font-family:'Shippori Mincho', serif;
+    font-size:18px;
+    margin-bottom:12px;
+    color:var(--vermillion-soft);
+  }
+  .transport-card p{
+    font-size:13px;
+    line-height:1.7;
+    color:rgba(245,239,228,0.85);
+  }
+  .transport-card strong{color:var(--paper);font-weight:500}
+
+  /* ========== FOOTER ========== */
+  footer{
+    padding:60px clamp(20px, 5vw, 64px);
+    text-align:center;
+    border-top:1px solid var(--line);
+  }
+  footer .stamp{
+    display:inline-block;
+    font-family:'Yuji Syuku', serif;
+    color:var(--vermillion);
+    border:2px solid var(--vermillion);
+    padding:14px 24px;
+    transform:rotate(-3deg);
+    font-size:20px;
+    margin-bottom:20px;
+  }
+  footer p{
+    font-size:13px;
+    color:var(--muted);
+    font-family:'Shippori Mincho', serif;
+  }
+
+  /* responsive */
+  @media (max-width: 720px){
+    .day-header{grid-template-columns:1fr;gap:8px}
+    .day-date{text-align:left}
+    .timeline::before{left:50px}
+    .stop{grid-template-columns:50px 1fr;gap:16px}
+    .stop-time .hh{font-size:18px}
+    .stop-card{padding:18px}
+    .stop-name{font-size:17px}
+    .hero h1{font-size:54px}
+    .tab-nav{
+      position:sticky;
+      top:0;
+      border-radius:0;
+      margin-left:calc(clamp(20px, 5vw, 64px) * -1);
+      margin-right:calc(clamp(20px, 5vw, 64px) * -1);
+      padding:8px 12px;
+    }
+    .tab-btn{min-width:78px;padding:10px 8px}
+    .tab-btn .tab-date{font-size:14px}
+    .day-nav{flex-direction:column;gap:10px}
+    .day-nav button{max-width:none}
+    .day-map{height:260px}
+  }
+
+  /* print */
+  @media print{
+    body{background:white}
+    .hero{min-height:auto;page-break-after:always}
+    .day{page-break-inside:avoid}
+    .transport{background:white;color:black}
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="top-bar">
+    <div>JED · FAMILY TRIP</div>
+    <div class="stamp">家族旅行</div>
+  </div>
+
+  <div class="hero-main">
+    <div class="kicker">2026 AUTUMN · 七日六夜</div>
+    <h1 class="display">福岡<span class="jp-mark">九州</span><br>親子小旅行</h1>
+    <p class="sub">「秋風吹過博多灣,孩子的笑聲混著拉麵香氣 ——<br>這是一趟剛剛好的家族時光。」</p>
+  </div>
+
+  <div class="meta-grid">
+    <div class="meta-item">
+      <div class="label">Dates</div>
+      <div class="value">9.19 — 9.25 <span class="small">(7天6夜)</span></div>
+    </div>
+    <div class="meta-item">
+      <div class="label">Travelers</div>
+      <div class="value">2大 + 2小</div>
+    </div>
+    <div class="meta-item">
+      <div class="label">Base</div>
+      <div class="value">博多 Hakata</div>
+    </div>
+    <div class="meta-item">
+      <div class="label">Weather</div>
+      <div class="value">22–28°C <span class="small">舒爽</span></div>
+    </div>
+    <div class="meta-item">
+      <div class="label">JPY/TWD</div>
+      <div class="value">≈ 0.21 <span class="small">參考</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- OVERVIEW & TIPS -->
+<section class="overview">
+  <div class="section-head">
+    <span class="num">壹</span>
+    <h2 class="display">行前重點</h2>
+    <span class="tag">Trip Notes</span>
+  </div>
+
+  <div class="quick-tips">
+    <div class="tip">
+      <span class="icon">交</span>
+      <div class="t-title">交通票券</div>
+      <div class="t-body">建議買「福岡市地下鐵 1 日券 640¥」或「FUKUOKA TOURIST CITY PASS 2,500¥」(含西鐵、JR、巴士),帶小孩用大眾運輸最省力。</div>
+    </div>
+    <div class="tip">
+      <span class="icon">住</span>
+      <div class="t-title">住宿地點</div>
+      <div class="t-body">推薦住「博多站」周邊或「中洲川端」,出機場 5 分鐘地鐵直達,大行李拖小孩超方便。Family Room 找 Hotel WBF、Hakata Excel Tokyu。</div>
+    </div>
+    <div class="tip">
+      <span class="icon">天</span>
+      <div class="t-title">天氣與穿著</div>
+      <div class="t-body">9 月下旬福岡日夜溫差 6-8°C,白天短袖+薄外套,早晚加件長袖。可能有秋颱,出發前一週要追蹤氣象。</div>
+    </div>
+    <div class="tip">
+      <span class="icon">食</span>
+      <div class="t-title">親子餐廳</div>
+      <div class="t-body">日本餐廳對小孩相當友善,大部分有兒童椅。一蘭、一風堂、もつ鍋大山、博多もつ鍋 おおやま 都歡迎家庭。</div>
+    </div>
+    <div class="tip">
+      <span class="icon">藥</span>
+      <div class="t-title">必備藥品</div>
+      <div class="t-body">小孩感冒藥、退燒藥、止瀉藥、防蚊液、OK 繃。出發前帶幼兒健保卡與英文版疫苗紀錄。</div>
+    </div>
+    <div class="tip">
+      <span class="icon">網</span>
+      <div class="t-title">網路與電源</div>
+      <div class="t-body">eSIM 或 WiFi 機帶兩台分流。日本插座 A 型 110V,iPhone/iPad 直接插即可,不需轉接。</div>
+    </div>
+  </div>
+</section>
+
+<!-- DAYS -->
+<section class="days">
+  <div class="section-head">
+    <span class="num">貳</span>
+    <h2 class="display">每日行程</h2>
+    <span class="tag">Day-by-Day</span>
+  </div>
+
+  <!-- Tab Navigation -->
+  <nav class="tab-nav" role="tablist" aria-label="Day selector">
+    <button class="tab-btn is-active" data-day="1" role="tab" aria-selected="true">
+      <span class="tab-day-num">Day 1</span>
+      <span class="tab-date">9.19</span>
+      <span class="tab-label">土 · 抵達</span>
+    </button>
+    <button class="tab-btn" data-day="2" role="tab" aria-selected="false">
+      <span class="tab-day-num">Day 2</span>
+      <span class="tab-date">9.20</span>
+      <span class="tab-label">日 · 公園</span>
+    </button>
+    <button class="tab-btn" data-day="3" role="tab" aria-selected="false">
+      <span class="tab-day-num">Day 3</span>
+      <span class="tab-date">9.21</span>
+      <span class="tab-label">月 · 太宰府</span>
+    </button>
+    <button class="tab-btn" data-day="4" role="tab" aria-selected="false">
+      <span class="tab-day-num">Day 4</span>
+      <span class="tab-date">9.22</span>
+      <span class="tab-label">火 · 海洋</span>
+    </button>
+    <button class="tab-btn" data-day="5" role="tab" aria-selected="false">
+      <span class="tab-day-num">Day 5</span>
+      <span class="tab-date">9.23</span>
+      <span class="tab-label">水 · 由布院</span>
+    </button>
+    <button class="tab-btn" data-day="6" role="tab" aria-selected="false">
+      <span class="tab-day-num">Day 6</span>
+      <span class="tab-date">9.24</span>
+      <span class="tab-label">木 · 天神</span>
+    </button>
+    <button class="tab-btn" data-day="7" role="tab" aria-selected="false">
+      <span class="tab-day-num">Day 7</span>
+      <span class="tab-date">9.25</span>
+      <span class="tab-label">金 · 歸途</span>
+    </button>
+  </nav>
+
+  <!-- DAY 1 -->
+  <div class="day is-active" id="day1" data-day-id="1">
+    <div class="day-header">
+      <div class="day-number">
+        <span class="day-label">Day One</span>
+        <span class="day-big">01</span>
+        <span class="day-of-week">土曜日 · 抵達日</span>
+      </div>
+      <div class="day-title">
+        <h3>抵達 · 博多放電</h3>
+        <p class="narrative">輕鬆抵達,先安頓行李,博多運河城讓孩子放電。傍晚走到櫛田神社,看博多總鎮守的巨大山笠車。</p>
+      </div>
+      <div class="day-date">
+        <div class="date-mm">9.19</div>
+        <div class="date-jp">睦月廿日</div>
+      </div>
+    </div>
+
+    <div class="day-map-wrap">
+      <div class="day-map" id="map-day1" aria-label="Day 1 map"></div>
+      <div class="day-map-legend">
+        <span class="dot">景點順序</span>
+        <span class="line">大致路線</span>
+        <span class="meta">點擊圖標查看詳情</span>
+      </div>
+    </div>
+
+    <div class="timeline">
+      <div class="stop is-major">
+        <div class="stop-time"><div class="hh">12:30</div><div class="dur">60 min</div></div>
+        <div class="stop-card">
+          <div class="stop-head"><div class="stop-name">福岡空港 Fukuoka Airport</div><span class="stop-type">Arrival</span></div>
+          <div class="stop-notes">出境後搭地鐵空港線到博多站只要 5 分鐘,日本最方便的市區機場。國際線航廈要先搭免費接駁巴士到國內線航廈才能上地鐵,約 10 分鐘。</div>
+          <div class="stop-actions">
+            <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Fukuoka+Airport&query_place_id=ChIJrQFpQhaQQTURtx9OWEZ_5hY" target="_blank">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              在 Google 地圖開啟
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-time"><div class="hh">14:00</div><div class="dur">60 min</div></div>
+        <div class="stop-card">
+          <div class="stop-head"><div class="stop-name">博多站(Check-in)</div><span class="stop-type">Hotel</span></div>
+          <div class="stop-notes">入住飯店附近,2大2小推薦選博多站週邊。AMU PLAZA 在站體裡,Lawson 24 小時對面就有。</div>
+          <div class="stop-actions">
+            <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Hakata+Station&query_place_id=ChIJdbP55seRQTURkIu5RT0r4i4" target="_blank">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              在 Google 地圖開啟
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="stop is-major">
+        <div class="stop-time"><div class="hh">15:30</div><div class="dur">3 hr</div></div>
+        <div class="stop-card">
+          <div class="stop-head"><div class="stop-name">博多運河城 Canal City</div><span class="stop-type shop">Mall</span></div>
+          <div class="stop-notes">中央噴水池每小時都有水舞秀(鋼彈、迪士尼尼主題輪替),B1 拉麵競技場、Bandai Namco 玩具店、吉卜力專賣店,小孩會玩瘋。</div>
+          <div class="stop-actions">
+            <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Canal+City+Hakata&query_place_id=ChIJYcOBiZWRQTUR0Rl0ehe67eA" target="_blank">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              在 Google 地圖開啟
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-time"><div class="hh">18:30</div><div class="dur">30 min</div></div>
+        <div class="stop-card">
+          <div class="stop-head"><div class="stop-name">櫛田神社</div><span class="stop-type shrine">Shrine</span></div>
+          <div class="stop-notes">從運河城步行 5 分鐘,博多總鎮守,可看到巨大的「山笠」山車,孩子會很驚奇。境內有長命水。</div>
+          <div class="stop-actions">
+            <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Kushida+Shrine+Fukuoka&query_place_id=ChIJV2pTquqRQTURpI1FhH5siaE" target="_blank">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              在 Google 地圖開啟
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="day-nav">
+      <button disabled><span class="nav-label">← Prev</span><span class="nav-title">起點</span></button>
+      <button class="next" data-goto="2"><span class="nav-label">Next →</span><span class="nav-title">9.20 公園日</span></button>
+    </div>
+  </div>
+
+  <!-- DAY 2 -->
+  <div class="day" id="day2" data-day-id="2">
+    <div class="day-header">
+      <div class="day-number">
+        <span class="day-label">Day Two</span>
+        <span class="day-big">02</span>
+        <span class="day-of-week">日曜日 · 公園日</span>
+      </div>
+      <div class="day-title">
+        <h3>市區公園 · 科學館</h3>
+        <p class="narrative">大濠公園划天鵝船、福岡城跡看古蹟,下午科學館 5F 親子互動展玩到不想走。</p>
+      </div>
+      <div class="day-date">
+        <div class="date-mm">9.20</div>
+        <div class="date-jp">睦月廿一日</div>
+      </div>
+    </div>
+
+    <div class="day-map-wrap">
+      <div class="day-map" id="map-day2" aria-label="Day 2 map"></div>
+      <div class="day-map-legend">
+        <span class="dot">景點順序</span>
+        <span class="line">大致路線</span>
+        <span class="meta">點擊圖標查看詳情</span>
+      </div>
+    </div>
+
+    <div class="timeline">
+      <div class="stop is-major">
+        <div class="stop-time"><div class="hh">09:30</div><div class="dur">2.5 hr</div></div>
+        <div class="stop-card">
+          <div class="stop-head"><div class="stop-name">大濠公園</div><span class="stop-type park">Park</span></div>
+          <div class="stop-notes">仿中國庭園造景的大湖,可租天鵝船(30 分鐘 ¥1000)。湖邊星巴克景觀座位、兒童遊具區、慢跑道,還有草間彌生的黃色南瓜可以拍照。</div>
+          <div class="stop-actions">
+            <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Ohori+Park&query_place_id=ChIJx6TbjMyTQTURmPdN7915780" target="_blank">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              在 Google 地圖開啟
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-time"><div class="hh">12:30</div><div class="dur">1.5 hr</div></div>
+        <div class="stop-card">
+          <div class="stop-head"><div class="stop-name">福岡城跡</div><span class="stop-type museum">Historic</span></div>
+          <div class="stop-notes">緊鄰大濠公園,城牆遺跡可登高俯瞰福岡市區,小孩當迷你登山玩。秋天綠意盎然,小野餐很適合。</div>
+          <div class="stop-actions">
+            <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Fukuoka+Castle+Ruins&query_place_id=ChIJQ_6JJtOTQTURigJ8dBobe18" target="_blank">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              在 Google 地圖開啟
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="stop is-major">
+        <div class="stop-time"><div class="hh">14:30</div><div class="dur">3 hr</div></div>
+        <div class="stop-card">
+          <div class="stop-head"><div class="stop-name">福岡市科學館</div><span class="stop-type museum">Museum</span></div>
+          <div class="stop-notes">5F 親子互動展超適合小孩,太空人零重力訓練裝置必玩,6F 天象廳要另購票。<strong style="color:var(--vermillion)">⚠ 週二休館要避開</strong>(9/22 是週二)。</div>
+          <div class="stop-actions">
+            <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Fukuoka+City+Science+Museum&query_place_id=ChIJZ1_ff6mTQTURELAWq3kZr5o" target="_blank">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              在 Google 地圖開啟
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="day-nav">
+      <button data-goto="1"><span class="nav-label">← Prev</span><span class="nav-title">9.19 抵達日</span></button>
+      <button class="next" data-goto="3"><span class="nav-label">Next →</span><span class="nav-title">9.21 太宰府</span></button>
+    </div>
+  </div>
+
+  <!-- DAY 3 -->
+  <div class="day" id="day3" data-day-id="3">
+    <div class="day-header">
+      <div class="day-number">
+        <span class="day-label">Day Three</span>
+        <span class="day-big">03</span>
+        <span class="day-of-week">月曜日 · 文化日</span>
+      </div>
+      <div class="day-title">
+        <h3>太宰府 · 千年文化</h3>
+        <p class="narrative">搭西鐵到太宰府,參拜學業之神菅原道真,九州國立博物館有兒童體驗區。</p>
+      </div>
+      <div class="day-date">
+        <div class="date-mm">9.21</div>
+        <div class="date-jp">睦月廿二日</div>
+      </div>
+    </div>
+
+    <div class="day-map-wrap">
+      <div class="day-map" id="map-day3" aria-label="Day 3 map"></div>
+      <div class="day-map-legend">
+        <span class="dot">景點順序</span>
+        <span class="line">大致路線</span>
+        <span class="meta">點擊圖標查看詳情</span>
+      </div>
+    </div>
+
+    <div class="timeline">
+      <div class="stop is-major">
+        <div class="stop-time"><div class="hh">10:00</div><div class="dur">2 hr</div></div>
+        <div class="stop-card">
+          <div class="stop-head"><div class="stop-name">太宰府天滿宮</div><span class="stop-type shrine">Shrine</span></div>
+          <div class="stop-notes">祈求學業之神菅原道真,本殿 2026 年仍在整修中,有綠屋頂臨時殿。參道梅枝餅必吃,記得買 5 個給全家。從博多西鐵約 40 分鐘。</div>
+          <div class="stop-actions">
+            <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Dazaifu+Tenmangu&query_place_id=ChIJzfvrKp-bQTURl65fp6vRJLg" target="_blank">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              在 Google 地圖開啟
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="stop is-major">
+        <div class="stop-time"><div class="hh">13:00</div><div class="dur">2.5 hr</div></div>
+        <div class="stop-card">
+          <div class="stop-head"><div class="stop-name">九州國立博物館</div><span class="stop-type museum">Museum</span></div>
+          <div class="stop-notes">從天滿宮搭手扶梯直通。1F「あじっぱ」兒童體驗區免費,亞洲文化互動展示,小孩穿戲服玩超久。建築本身的玻璃曲面很值得拍照。</div>
+          <div class="stop-actions">
+            <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Kyushu+National+Museum&query_place_id=ChIJK4ld4qiTQTURnIfmKzchJLs" target="_blank">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              在 Google 地圖開啟
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="day-nav">
+      <button data-goto="2"><span class="nav-label">← Prev</span><span class="nav-title">9.20 公園日</span></button>
+      <button class="next" data-goto="4"><span class="nav-label">Next →</span><span class="nav-title">9.22 海洋日</span></button>
+    </div>
+  </div>
+
+  <!-- DAY 4 -->
+  <div class="day" id="day4" data-day-id="4">
+    <div class="day-header">
+      <div class="day-number">
+        <span class="day-label">Day Four</span>
+        <span class="day-big">04</span>
+        <span class="day-of-week">火曜日 · 海洋日</span>
+      </div>
+      <div class="day-title">
+        <h3>海之中道 · 全日放電</h3>
+        <p class="narrative">水族館看海豚海獅秀,下午對面海濱公園租協力車狂飆,小孩會累到秒睡。</p>
+      </div>
+      <div class="day-date">
+        <div class="date-mm">9.22</div>
+        <div class="date-jp">睦月廿三日</div>
+      </div>
+    </div>
+
+    <div class="day-map-wrap">
+      <div class="day-map" id="map-day4" aria-label="Day 4 map"></div>
+      <div class="day-map-legend">
+        <span class="dot">景點順序</span>
+        <span class="line">大致路線</span>
+        <span class="meta">點擊圖標查看詳情</span>
+      </div>
+    </div>
+
+    <div class="timeline">
+      <div class="stop is-major">
+        <div class="stop-time"><div class="hh">09:30</div><div class="dur">3.5 hr</div></div>
+        <div class="stop-card">
+          <div class="stop-head"><div class="stop-name">海之中道海洋世界</div><span class="stop-type park">Aquarium</span></div>
+          <div class="stop-notes">海豚秀、海獅秀必看,沙丁魚群水族箱壯觀。可餵海豹,記得早上去人少。手蓋 UV 印章可再入場。從博多搭 JR 香椎線約 40 分鐘。</div>
+          <div class="stop-actions">
+            <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Marine+World+Uminonakamichi&query_place_id=ChIJR4tIGrGNQTURRMLEZ9kNOr8" target="_blank">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              在 Google 地圖開啟
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="stop is-major">
+        <div class="stop-time"><div class="hh">13:30</div><div class="dur">3.5 hr</div></div>
+        <div class="stop-card">
+          <div class="stop-head"><div class="stop-name">海之中道海濱公園</div><span class="stop-type park">Park</span></div>
+          <div class="stop-notes">緊鄰水族館,占地超大務必租協力車或單人車,有巨型彈跳丘、小動物園、遊具區,小孩會放電到睡死。一張票兩個小孩都可玩。</div>
+          <div class="stop-actions">
+            <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Uminonakamichi+Seaside+Park&query_place_id=ChIJaQp6H7KNQTURjzG7SoOP370" target="_blank">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              在 Google 地圖開啟
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="day-nav">
+      <button data-goto="3"><span class="nav-label">← Prev</span><span class="nav-title">9.21 太宰府</span></button>
+      <button class="next" data-goto="5"><span class="nav-label">Next →</span><span class="nav-title">9.23 由布院</span></button>
+    </div>
+  </div>
+
+  <!-- DAY 5 -->
+  <div class="day" id="day5" data-day-id="5">
+    <div class="day-header">
+      <div class="day-number">
+        <span class="day-label">Day Five</span>
+        <span class="day-big">05</span>
+        <span class="day-of-week">水曜日 · 童話日</span>
+      </div>
+      <div class="day-title">
+        <h3>由布院一日小旅行</h3>
+        <p class="narrative">大分縣由布院,童話小村莊。Miffy、Snoopy、龍貓主題店,搭配湯之坪街道散步、足湯放鬆。</p>
+      </div>
+      <div class="day-date">
+        <div class="date-mm">9.23</div>
+        <div class="date-jp">睦月廿四日</div>
+      </div>
+    </div>
+
+    <div class="day-map-wrap">
+      <div class="day-map" id="map-day5" aria-label="Day 5 map"></div>
+      <div class="day-map-legend">
+        <span class="dot">景點順序</span>
+        <span class="line">大致路線</span>
+        <span class="meta">點擊圖標查看詳情</span>
+      </div>
+    </div>
+
+    <div class="timeline">
+      <div class="stop is-major">
+        <div class="stop-time"><div class="hh">10:30</div><div class="dur">5 hr</div></div>
+        <div class="stop-card">
+          <div class="stop-head"><div class="stop-name">湯布院 Floral Village</div><span class="stop-type fun">Day Trip</span></div>
+          <div class="stop-notes">從博多開車約 1.5-2 小時,或搭由布院之森特急列車。歐風小村莊有 Miffy、Snoopy、龍貓主題店,貓頭鷹咖啡廳。搭配湯之坪街道、湯之湯本溫泉足湯,9 月底天氣涼正好。<strong style="color:var(--vermillion)">建議租車或包車,帶小孩省力</strong>。</div>
+          <div class="stop-actions">
+            <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Yufuin+Floral+Village&query_place_id=ChIJWax-bn6uRjUReLLmqHrObCU" target="_blank">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              在 Google 地圖開啟
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="day-nav">
+      <button data-goto="4"><span class="nav-label">← Prev</span><span class="nav-title">9.22 海洋日</span></button>
+      <button class="next" data-goto="6"><span class="nav-label">Next →</span><span class="nav-title">9.24 天神</span></button>
+    </div>
+  </div>
+
+  <!-- DAY 6 -->
+  <div class="day" id="day6" data-day-id="6">
+    <div class="day-header">
+      <div class="day-number">
+        <span class="day-label">Day Six</span>
+        <span class="day-big">06</span>
+        <span class="day-of-week">木曜日 · 都會日</span>
+      </div>
+      <div class="day-title">
+        <h3>百道濱 · 天神購物</h3>
+        <p class="narrative">福岡塔看海景,BOSS E·ZO 玩 teamLab Forest,晚上到天神逛街、藥妝最後補貨。</p>
+      </div>
+      <div class="day-date">
+        <div class="date-mm">9.24</div>
+        <div class="date-jp">睦月廿五日</div>
+      </div>
+    </div>
+
+    <div class="day-map-wrap">
+      <div class="day-map" id="map-day6" aria-label="Day 6 map"></div>
+      <div class="day-map-legend">
+        <span class="dot">景點順序</span>
+        <span class="line">大致路線</span>
+        <span class="meta">點擊圖標查看詳情</span>
+      </div>
+    </div>
+
+    <div class="timeline">
+      <div class="stop">
+        <div class="stop-time"><div class="hh">10:00</div><div class="dur">1.5 hr</div></div>
+        <div class="stop-card">
+          <div class="stop-head"><div class="stop-name">福岡塔</div><span class="stop-type museum">Tower</span></div>
+          <div class="stop-notes">234m 海濱塔,展望台票價 ¥800。對面就是百道濱海灘,可下去玩沙。建築由 8000 片鏡子組成,陽光下會閃。</div>
+          <div class="stop-actions">
+            <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Fukuoka+Tower&query_place_id=ChIJAQAEI6qTQTURLZF6YTY7dPk" target="_blank">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              在 Google 地圖開啟
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="stop is-major">
+        <div class="stop-time"><div class="hh">12:30</div><div class="dur">4 hr</div></div>
+        <div class="stop-card">
+          <div class="stop-head"><div class="stop-name">BOSS E·ZO FUKUOKA</div><span class="stop-type fun">teamLab</span></div>
+          <div class="stop-notes">福岡巨蛋旁複合設施,5F teamLab Forest 沉浸式光影、屋頂雲霄飛車、VR 區、大型溜滑梯(10歲以上)、攀岩。下雨天首選,小孩可以玩超久。</div>
+          <div class="stop-actions">
+            <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=BOSS+E+ZO+FUKUOKA&query_place_id=ChIJwdDAakKTQTURjtpW3lHTCug" target="_blank">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              在 Google 地圖開啟
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="stop is-major">
+        <div class="stop-time"><div class="hh">17:30</div><div class="dur">2.5 hr</div></div>
+        <div class="stop-card">
+          <div class="stop-head"><div class="stop-name">天神地下街</div><span class="stop-type shop">Shopping</span></div>
+          <div class="stop-notes">歐式風格地下街連接所有百貨,藥妝、無印、UNIQLO 一網打盡,GU 童裝便宜大碗。晚餐選天婦羅ひらお或博多串燒。</div>
+          <div class="stop-actions">
+            <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Tenjin+Underground+Mall&query_place_id=ChIJ970Xo46RQTURm6GUmUJcn6Y" target="_blank">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              在 Google 地圖開啟
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="day-nav">
+      <button data-goto="5"><span class="nav-label">← Prev</span><span class="nav-title">9.23 由布院</span></button>
+      <button class="next" data-goto="7"><span class="nav-label">Next →</span><span class="nav-title">9.25 回程</span></button>
+    </div>
+  </div>
+
+  <!-- DAY 7 -->
+  <div class="day" id="day7" data-day-id="7">
+    <div class="day-header">
+      <div class="day-number">
+        <span class="day-label">Day Seven</span>
+        <span class="day-big">07</span>
+        <span class="day-of-week">金曜日 · 回程日</span>
+      </div>
+      <div class="day-title">
+        <h3>博多伴手禮 · 歸國</h3>
+        <p class="narrative">最後補買博多名物,AMU PLAZA 一站搞定,搭地鐵 5 分鐘進機場。</p>
+      </div>
+      <div class="day-date">
+        <div class="date-mm">9.25</div>
+        <div class="date-jp">睦月廿六日</div>
+      </div>
+    </div>
+
+    <div class="day-map-wrap">
+      <div class="day-map" id="map-day7" aria-label="Day 7 map"></div>
+      <div class="day-map-legend">
+        <span class="dot">景點順序</span>
+        <span class="line">大致路線</span>
+        <span class="meta">點擊圖標查看詳情</span>
+      </div>
+    </div>
+
+    <div class="timeline">
+      <div class="stop is-major">
+        <div class="stop-time"><div class="hh">10:00</div><div class="dur">3 hr</div></div>
+        <div class="stop-card">
+          <div class="stop-head"><div class="stop-name">博多站(伴手禮)</div><span class="stop-type shop">Souvenirs</span></div>
+          <div class="stop-notes">AMU PLAZA 集合九州名物,明太子(ふくや、椒房庵)、博多通饅頭、ひよ子小雞饅頭、福岡的萩之月。通天閣前廣場常有期間限定市集。</div>
+          <div class="stop-actions">
+            <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Hakata+Station&query_place_id=ChIJdbP55seRQTURkIu5RT0r4i4" target="_blank">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              在 Google 地圖開啟
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="stop is-major">
+        <div class="stop-time"><div class="hh">14:00</div><div class="dur">60 min</div></div>
+        <div class="stop-card">
+          <div class="stop-head"><div class="stop-name">福岡空港(歸途)</div><span class="stop-type">Departure</span></div>
+          <div class="stop-notes">國際線航廈在另一側,要搭免費接駁巴士 10 分鐘。建議起飛前 2.5 小時抵達,2大2小過海關要時間。航廈內有 Royce、北菓樓最後補貨機會。</div>
+          <div class="stop-actions">
+            <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Fukuoka+Airport&query_place_id=ChIJrQFpQhaQQTURtx9OWEZ_5hY" target="_blank">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              在 Google 地圖開啟
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="day-nav">
+      <button data-goto="6"><span class="nav-label">← Prev</span><span class="nav-title">9.24 天神日</span></button>
+      <button class="next" disabled><span class="nav-label">完 ·  終</span><span class="nav-title">旅程結束</span></button>
+    </div>
+  </div>
+</section>
+<section class="transport">
+  <div class="transport-inner">
+    <h2 class="display">交通與預算<span class="jp-mark">指南</span></h2>
+    <div class="transport-grid">
+      <div class="transport-card">
+        <h4>機場 ⇄ 市區</h4>
+        <p>福岡空港地鐵站「直達博多 5 分鐘 ¥260,直達天神 11 分鐘 ¥260」,日本最快進城機場。國際線要搭<strong>免費接駁巴士</strong>到國內線航廈才能上地鐵。</p>
+      </div>
+      <div class="transport-card">
+        <h4>市內交通票券</h4>
+        <p><strong>地鐵 1 日券 ¥640</strong>(小孩半價)。<strong>FUKUOKA TOURIST CITY PASS ¥2,500</strong>(含西鐵、JR、巴士、地鐵),適合一天跑多處。<strong>SUGOCA</strong> 儲值卡最方便,綁 Apple Wallet 用 iPhone 嗶。</p>
+      </div>
+      <div class="transport-card">
+        <h4>太宰府交通</h4>
+        <p>搭<strong>西鐵</strong>從福岡(天神)→ 二日市 → 太宰府,單程 ¥420,約 40 分鐘。或搭「旅人號」直達巴士,從博多巴士總站出發 ¥700,適合不想換車的家庭。</p>
+      </div>
+      <div class="transport-card">
+        <h4>由布院交通</h4>
+        <p>JR<strong>「由布院之森」特急</strong>從博多直達由布院,約 2 小時 10 分,單程 ¥4,660。建議提前 1 個月預訂指定席,熱門班次秒殺。或租車自駕約 1.5 小時。</p>
+      </div>
+      <div class="transport-card">
+        <h4>海之中道交通</h4>
+        <p>JR 香椎線從博多 → 香椎 → 海ノ中道站,約 40 分鐘 ¥470。或從天神/博多搭「Uminaka Line」海上計程船更有趣,小孩會喜歡,約 17 分鐘 ¥1,200。</p>
+      </div>
+      <div class="transport-card">
+        <h4>預算估算</h4>
+        <p>機票(2大2小)約 NT$60,000–80,000。住宿 6 晚 family room 約 NT$45,000–60,000。交通+門票+餐費約 NT$60,000(4 人總計)。<strong>總預算約 NT$17–22 萬</strong>,可彈性調整。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="stamp">良き旅を</div>
+  <p>2026 / 9 · Fukuoka Family Itinerary</p>
+  <p style="margin-top:8px;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;">Plan made for Jed</p>
+</footer>
+
+<script>
+(function(){
+  // ============ Day locations data ============
+  const DAY_DATA = {
+    1: { center:[33.589, 130.42], stops:[
+      {n:'1', name:'福岡空港', sub:'12:30 抵達', lat:33.5849988, lng:130.4490906, type:'start'},
+      {n:'2', name:'博多車站', sub:'14:00 入住', lat:33.5897275, lng:130.4207274},
+      {n:'3', name:'博多運河城', sub:'15:30 購物', lat:33.5896305, lng:130.4109478},
+      {n:'4', name:'櫛田神社', sub:'18:30 參拜', lat:33.5929546, lng:130.4104589, type:'end'}
+    ]},
+    2: { center:[33.583, 130.38], stops:[
+      {n:'1', name:'大濠公園', sub:'09:30 划船', lat:33.5862065, lng:130.3764646, type:'start'},
+      {n:'2', name:'福岡城跡', sub:'12:30 古蹟', lat:33.5852452, lng:130.3832159},
+      {n:'3', name:'福岡市科學館', sub:'14:30 親子展', lat:33.5774099, lng:130.3782313, type:'end'}
+    ]},
+    3: { center:[33.520, 130.536], stops:[
+      {n:'1', name:'太宰府天滿宮', sub:'10:00 參拜', lat:33.5213697, lng:130.5348239, type:'start'},
+      {n:'2', name:'九州國立博物館', sub:'13:00 兒童展', lat:33.5182578, lng:130.5381224, type:'end'}
+    ]},
+    4: { center:[33.662, 130.363], stops:[
+      {n:'1', name:'海之中道海洋世界', sub:'09:30 水族館', lat:33.660851, lng:130.363413, type:'start'},
+      {n:'2', name:'海之中道海濱公園', sub:'13:30 協力車', lat:33.6642785, lng:130.3616, type:'end'}
+    ]},
+    5: { center:[33.267, 131.366], stops:[
+      {n:'1', name:'湯布院 Floral Village', sub:'10:30 童話小村', lat:33.2674871, lng:131.3655357, type:'start'}
+    ]},
+    6: { center:[33.591, 130.37], stops:[
+      {n:'1', name:'福岡塔', sub:'10:00 海景塔', lat:33.5932846, lng:130.35151, type:'start'},
+      {n:'2', name:'BOSS E·ZO FUKUOKA', sub:'12:30 teamLab', lat:33.5949436, lng:130.363646},
+      {n:'3', name:'天神地下街', sub:'17:30 購物', lat:33.589986, lng:130.399501, type:'end'}
+    ]},
+    7: { center:[33.587, 130.434], stops:[
+      {n:'1', name:'博多車站', sub:'10:00 伴手禮', lat:33.5897275, lng:130.4207274, type:'start'},
+      {n:'2', name:'福岡空港', sub:'14:00 歸途', lat:33.5849988, lng:130.4490906, type:'end'}
+    ]}
+  };
+
+  const maps = {};
+
+  function initMap(dayId){
+    if (maps[dayId] || typeof L === 'undefined') return;
+    const data = DAY_DATA[dayId];
+    if (!data) return;
+    const containerId = 'map-day' + dayId;
+    const el = document.getElementById(containerId);
+    if (!el) return;
+
+    const map = L.map(containerId, {
+      scrollWheelZoom: false,
+      zoomControl: true,
+      attributionControl: true,
+    }).setView(data.center, 13);
+
+    // Soft paper-friendly tiles
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+      subdomains: 'abcd',
+      maxZoom: 19,
+    }).addTo(map);
+
+    const latlngs = [];
+    data.stops.forEach(stop => {
+      const cls = stop.type === 'start' ? 'pin start' : (stop.type === 'end' ? 'pin end' : 'pin');
+      const icon = L.divIcon({
+        className: 'pin-wrap',
+        html: `<div class="${cls}"><span>${stop.n}</span></div>`,
+        iconSize: [32, 32],
+        iconAnchor: [16, 32],
+        popupAnchor: [0, -32],
+      });
+      const marker = L.marker([stop.lat, stop.lng], {icon}).addTo(map);
+      marker.bindPopup(`<b>${stop.name}</b><small>${stop.sub}</small>`);
+      latlngs.push([stop.lat, stop.lng]);
+    });
+
+    // Dashed route line between stops
+    if (latlngs.length > 1) {
+      L.polyline(latlngs, {
+        color: '#c1432b',
+        weight: 2.5,
+        opacity: 0.8,
+        dashArray: '6, 8',
+      }).addTo(map);
+      map.fitBounds(latlngs, {padding: [40, 40], maxZoom: 14});
+    } else {
+      map.setView(latlngs[0], 14);
+    }
+
+    maps[dayId] = map;
+  }
+
+  // ============ Tab switching ============
+  const tabs = document.querySelectorAll('.tab-btn');
+  const days = document.querySelectorAll('.day');
+  const tabNav = document.querySelector('.tab-nav');
+  const daysSection = document.querySelector('.days');
+
+  function show(dayId, scroll){
+    dayId = String(dayId);
+    tabs.forEach(t => {
+      const active = t.dataset.day === dayId;
+      t.classList.toggle('is-active', active);
+      t.setAttribute('aria-selected', active);
+    });
+    days.forEach(d => {
+      d.classList.toggle('is-active', d.dataset.dayId === dayId);
+    });
+
+    history.replaceState(null, '', '#day' + dayId);
+
+    // initialize the map for this day (lazy) and fix sizing
+    initMap(dayId);
+    setTimeout(() => {
+      const m = maps[dayId];
+      if (m) {
+        m.invalidateSize();
+        const data = DAY_DATA[dayId];
+        if (data && data.stops.length > 1) {
+          m.fitBounds(data.stops.map(s => [s.lat, s.lng]), {padding:[40,40], maxZoom:14});
+        } else if (data) {
+          m.setView([data.stops[0].lat, data.stops[0].lng], 14);
+        }
+      }
+    }, 60);
+
+    const activeTab = document.querySelector('.tab-btn.is-active');
+    if (activeTab) {
+      activeTab.scrollIntoView({behavior:'smooth', block:'nearest', inline:'center'});
+    }
+
+    if (scroll && daysSection){
+      const targetY = daysSection.getBoundingClientRect().top + window.pageYOffset - 8;
+      window.scrollTo({top: targetY, behavior:'smooth'});
+    }
+  }
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => show(tab.dataset.day, false));
+  });
+
+  document.querySelectorAll('.day-nav button[data-goto]').forEach(btn => {
+    btn.addEventListener('click', () => show(btn.dataset.goto, true));
+  });
+
+  tabNav.addEventListener('keydown', (e) => {
+    if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+    const current = document.querySelector('.tab-btn.is-active');
+    if (!current) return;
+    const all = Array.from(tabs);
+    const idx = all.indexOf(current);
+    const nextIdx = e.key === 'ArrowRight'
+      ? Math.min(idx + 1, all.length - 1)
+      : Math.max(idx - 1, 0);
+    show(all[nextIdx].dataset.day, false);
+    all[nextIdx].focus();
+  });
+
+  // Touch swipe between days
+  let touchStartX = 0, touchStartY = 0, touchTarget = null;
+  daysSection.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+    touchTarget = e.target;
+  }, {passive: true});
+  daysSection.addEventListener('touchend', (e) => {
+    // Ignore swipes that started inside the map (Leaflet handles those)
+    if (touchTarget && touchTarget.closest('.day-map-wrap')) return;
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+    if (Math.abs(dx) < 60 || Math.abs(dy) > 50) return;
+    const current = parseInt(document.querySelector('.tab-btn.is-active').dataset.day, 10);
+    const target = dx < 0 ? Math.min(current + 1, 7) : Math.max(current - 1, 1);
+    if (target !== current) show(target, false);
+  }, {passive: true});
+
+  // ============ Boot ============
+  function boot(){
+    // Initialize the active (first) day's map immediately
+    const hash = window.location.hash.match(/day(\d+)/);
+    const startDay = hash && hash[1] ? hash[1] : '1';
+    if (startDay !== '1') {
+      show(startDay, false);
+    } else {
+      initMap('1');
+    }
+  }
+
+  if (typeof L !== 'undefined') {
+    boot();
+  } else {
+    // Leaflet loads with defer, wait for it
+    window.addEventListener('load', boot);
+  }
+})();
+</script>
+
+</body>
+</html>
