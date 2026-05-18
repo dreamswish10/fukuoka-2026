@@ -10,6 +10,7 @@
 - 每日 stops 互動式地圖 (Leaflet + OpenStreetMap)
 - 每個景點都有 Google Maps 連結,手機點開直接跳 Maps app
 - 交通、預算、行前提醒
+- **逛街購物日牌指南**(福岡 / 熊本 / 別府 三城,含親子日牌、退稅、採購時程)
 - 響應式設計,iPhone / iPad / Mac 都能看
 - 支援鍵盤左右切換、手機左右滑動切換日期
 

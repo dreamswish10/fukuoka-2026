@@ -733,6 +733,133 @@
   }
   .transport-card strong{color:var(--paper);font-weight:500}
 
+  /* ========== SHOPPING ========== */
+  .shopping{
+    padding:0 clamp(20px, 5vw, 64px) 80px;
+    max-width:1400px;
+    margin:0 auto;
+  }
+  .shop-intro{
+    background:rgba(255,255,255,0.55);
+    border:1px solid var(--line);
+    border-left:3px solid var(--vermillion);
+    padding:18px 22px;
+    border-radius:4px;
+    margin-bottom:48px;
+    font-size:14px;
+    line-height:1.75;
+    color:var(--ink-soft);
+    backdrop-filter:blur(8px);
+  }
+  .shop-intro strong{color:var(--vermillion);font-weight:600}
+  .shop-area{margin-bottom:56px}
+  .shop-area-head{
+    display:flex;
+    align-items:baseline;
+    gap:16px;
+    margin-bottom:24px;
+    padding-bottom:12px;
+    border-bottom:1px solid var(--line);
+  }
+  .shop-area-head .area-jp{
+    font-family:'Yuji Syuku', serif;
+    font-size:30px;
+    color:var(--vermillion);
+    line-height:1;
+  }
+  .shop-area-head h3{
+    font-family:'Shippori Mincho', serif;
+    font-size:22px;
+    font-weight:700;
+    color:var(--ink);
+  }
+  .shop-area-head .area-note{
+    margin-left:auto;
+    font-size:11px;
+    color:var(--muted);
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+  }
+  .shop-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));
+    gap:18px;
+  }
+  .shop-card{
+    background:rgba(255,255,255,0.6);
+    border:1px solid var(--line);
+    border-radius:4px;
+    padding:22px 22px 20px;
+    backdrop-filter:blur(6px);
+    box-shadow:var(--shadow);
+    display:flex;
+    flex-direction:column;
+  }
+  .shop-card .shop-head{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:8px;
+  }
+  .shop-card h4{
+    font-family:'Shippori Mincho', serif;
+    font-size:17px;
+    font-weight:700;
+    color:var(--ink);
+    line-height:1.3;
+  }
+  .shop-card .shop-zone{
+    font-size:11px;
+    letter-spacing:0.1em;
+    color:var(--vermillion);
+    font-family:'Yuji Syuku', serif;
+    white-space:nowrap;
+  }
+  .shop-card .shop-desc{
+    font-size:13px;
+    color:var(--muted);
+    line-height:1.65;
+    margin-bottom:14px;
+  }
+  .shop-card .shop-list{
+    list-style:none;
+    padding:0;
+    margin:0;
+    font-size:13px;
+    color:var(--ink-soft);
+    line-height:1.7;
+  }
+  .shop-card .shop-list li{
+    padding:3px 0 3px 14px;
+    position:relative;
+  }
+  .shop-card .shop-list li::before{
+    content:'·';
+    color:var(--vermillion);
+    font-weight:700;
+    position:absolute;
+    left:0;
+    font-size:18px;
+    line-height:1.3;
+  }
+  .shop-card .shop-list strong{color:var(--ink);font-weight:600}
+  .shop-card .shop-tip{
+    margin-top:14px;
+    padding-top:12px;
+    border-top:1px dashed var(--line);
+    font-size:12px;
+    color:var(--muted);
+    line-height:1.6;
+  }
+  .shop-card .shop-tip strong{color:var(--vermillion);font-weight:500}
+  .shop-card a{
+    color:var(--indigo);
+    text-decoration:none;
+    border-bottom:1px solid rgba(45,74,124,0.3);
+  }
+  .shop-card a:hover{color:var(--vermillion);border-bottom-color:var(--vermillion)}
+
   /* ========== FOOTER ========== */
   footer{
     padding:60px clamp(20px, 5vw, 64px);
@@ -778,6 +905,11 @@
     .day-nav{flex-direction:column;gap:10px}
     .day-nav button{max-width:none}
     .day-map{height:260px}
+    .shop-area-head{flex-wrap:wrap;gap:10px}
+    .shop-area-head .area-note{margin-left:0;flex-basis:100%}
+    .shop-card{padding:18px}
+    .shop-card h4{font-size:16px}
+    .shop-card .shop-head{flex-wrap:wrap;gap:4px}
   }
 
   /* print */
@@ -786,6 +918,8 @@
     .hero{min-height:auto;page-break-after:always}
     .day{page-break-inside:avoid}
     .transport{background:white;color:black}
+    .shop-area{page-break-inside:avoid}
+    .shop-card{background:white;break-inside:avoid}
   }
 </style>
 </head>
@@ -1677,6 +1811,301 @@
     </div>
   </div>
 </section>
+
+<!-- SHOPPING -->
+<section class="shopping">
+  <div class="section-head">
+    <span class="num">參</span>
+    <h2 class="display">逛街購物 · 日牌指南</h2>
+    <span class="tag">Shopping</span>
+  </div>
+
+  <div class="shop-intro">
+    以 <strong>日系品牌</strong> 為主軸,串連 福岡 / 熊本 / 別府 三城。福岡是九州商業中心,select shop 與親子日牌齊全;熊本以下通商店街 + 鶴屋百貨為核心;別府主溫泉,購物從簡。免稅:同店同日 <strong>¥5,000+</strong> 即可辦理(消耗品與一般品分開計算),結帳當下出示護照,退稅單會釘在護照內頁,出境時不需出示。
+  </div>
+
+  <!-- 福岡 / 博多 -->
+  <div class="shop-area">
+    <div class="shop-area-head">
+      <span class="area-jp">福</span>
+      <h3>福岡 / 博多</h3>
+      <span class="area-note">Day 3 · 5 · 6</span>
+    </div>
+    <div class="shop-grid">
+      <article class="shop-card">
+        <div class="shop-head">
+          <h4>JR 博多 CITY · AMU PLAZA 博多</h4>
+          <span class="shop-zone">博多駅直結</span>
+        </div>
+        <p class="shop-desc">博多駅內最大複合商城,B1 阪急百貨(食品 + 化妝品),1-8F 服飾雜貨,8F Pokemon Center / Kiddy Land。回程順買最方便。</p>
+        <ul class="shop-list">
+          <li><strong>UNITED ARROWS · BEAMS · JOURNAL STANDARD</strong> · select shop 三巨頭</li>
+          <li><strong>UNIQLO · GU · 無印良品</strong> · 國民日牌齊全</li>
+          <li><strong>HANDS 博多店</strong> · 雜貨 / 文具 / 旅行小物</li>
+          <li><strong>Pokemon Center · Kiddy Land · ジャンプショップ</strong></li>
+          <li><strong>博多 阪急 B1F</strong> · 名菓 / 抹茶 / 伴手禮</li>
+        </ul>
+        <div class="shop-tip"><strong>Day 6</strong> 傍晚糸島回程順道補貨;<strong>Day 7</strong> 退房後也可逛 1 小時。</div>
+      </article>
+
+      <article class="shop-card">
+        <div class="shop-head">
+          <h4>キャナルシティ博多 · 運河城</h4>
+          <span class="shop-zone">博多徒步 10 分</span>
+        </div>
+        <p class="shop-desc">運河造型大型購物中心,5F 拉麵スタジアム 8 家拉麵集合。小孩看噴泉表演,大人逛街兩相宜。</p>
+        <ul class="shop-list">
+          <li><strong>UNIQLO · GU · 無印良品</strong></li>
+          <li><strong>ABC-MART · ABC-MART GRAND STAGE</strong> · 鞋款齊全</li>
+          <li><strong>ジャンプショップ</strong> · 鬼滅・海賊王・呪術迴戰周邊</li>
+          <li><strong>BIRTHDAY by SHIMAMURA / アカチャンホンポ</strong> · 親子實穿</li>
+          <li><strong>無敵家ラーメン · 一風堂</strong> · 拉麵晚餐</li>
+        </ul>
+        <div class="shop-tip"><strong>Day 3</strong> 晚 さくら 抵達後晚餐 + 逛街的最佳組合。</div>
+      </article>
+
+      <article class="shop-card">
+        <div class="shop-head">
+          <h4>天神 · 大丸 / 三越 / 岩田屋</h4>
+          <span class="shop-zone">天神駅直結</span>
+        </div>
+        <p class="shop-desc">傳統老牌三大百貨集中地,精品 + 親子日牌 + 高質感 select 一次到位。<strong>岩田屋本店</strong> 是日牌最齊的一間。</p>
+        <ul class="shop-list">
+          <li><strong>Comme des Garçons · Issey Miyake · BAO BAO</strong> · 三越/岩田屋</li>
+          <li><strong>tomorrowland · MARGARET HOWELL · Theory</strong></li>
+          <li><strong>MIKI HOUSE · familiar</strong> · 親子高端日牌(岩田屋 6F、阪急)</li>
+          <li><strong>大丸 B2F 食品館</strong> · 名菓 / 弁当 / 和菓子</li>
+          <li><strong>福岡三越 9F</strong> · 兒童遊戲區</li>
+        </ul>
+        <div class="shop-tip"><strong>Day 5</strong> 全天主場;百貨退稅櫃台集中辦理 (¥5,000+ 即享)。</div>
+      </article>
+
+      <article class="shop-card">
+        <div class="shop-head">
+          <h4>天神 · PARCO / SOLARIA / 新天町</h4>
+          <span class="shop-zone">天神駅 1 分</span>
+        </div>
+        <p class="shop-desc">年輕日牌 + select shop 集中區。PARCO 與 SOLARIA PLAZA 相鄰,加上拱廊 新天町,半天逛不完。</p>
+        <ul class="shop-list">
+          <li><strong>BEAMS · SHIPS · UNITED ARROWS · JOURNAL STANDARD</strong></li>
+          <li><strong>niko and... · studio CLIP · URBAN RESEARCH · GLOBAL WORK</strong></li>
+          <li><strong>45R · KAPITAL</strong> · 日式 heritage(福岡 PARCO 本館 4F)</li>
+          <li><strong>Yohji Yamamoto · sacai</strong> · 福岡 PARCO 5F</li>
+          <li><strong>@cosme · LoFt 天神店</strong> · 美妝 + 雜貨</li>
+        </ul>
+        <div class="shop-tip"><strong>Day 5</strong> 14:30 起午後到深夜都開,晚餐前後皆可逛。</div>
+      </article>
+
+      <article class="shop-card">
+        <div class="shop-head">
+          <h4>天神地下街</h4>
+          <span class="shop-zone">天神駅地下</span>
+        </div>
+        <p class="shop-desc">600 公尺南北延伸地下街,19 世紀歐風裝潢。下雨天首選,從西鐵福岡駅一路逛到天神駅完全不出地面。</p>
+        <ul class="shop-list">
+          <li><strong>Afternoon Tea LIVING · studio CLIP</strong> · 雜貨</li>
+          <li><strong>Anello · LeSportsac</strong> · 包款</li>
+          <li><strong>口紅・3COINS · PLAZA</strong> · 平價小物</li>
+          <li><strong>無印良品 天神大名店</strong> 也在附近(地上出口連通)</li>
+        </ul>
+        <div class="shop-tip">配 Day 5 下雨備案;適合穿插在百貨之間休息走逛。</div>
+      </article>
+
+      <article class="shop-card">
+        <div class="shop-head">
+          <h4>中洲川端 · 川端通商店街</h4>
+          <span class="shop-zone">中洲川端駅</span>
+        </div>
+        <p class="shop-desc">運河城旁邊的老派拱廊商店街,400 公尺長。土產 / 老舖和菓子 / DON DON DONKI 24 hr 大型店都在這。</p>
+        <ul class="shop-list">
+          <li><strong>DON DON DONKI 中洲川端店</strong> · 24 hr 退稅</li>
+          <li><strong>博多町家ふるさと館</strong> · 在地工藝品</li>
+          <li><strong>鈴懸 本店</strong> · 福岡名店,鈴乃最中</li>
+        </ul>
+        <div class="shop-tip"><strong>Day 3</strong> 運河城晚餐後散步順買;<strong>Day 5</strong> 中洲屋台前也可繞。</div>
+      </article>
+    </div>
+  </div>
+
+  <!-- 熊本 -->
+  <div class="shop-area">
+    <div class="shop-area-head">
+      <span class="area-jp">熊</span>
+      <h3>熊本</h3>
+      <span class="area-note">Day 2 PM · Day 3 AM</span>
+    </div>
+    <div class="shop-grid">
+      <article class="shop-card">
+        <div class="shop-head">
+          <h4>AMU PLAZA 熊本 · JR 熊本駅</h4>
+          <span class="shop-zone">熊本駅直結</span>
+        </div>
+        <p class="shop-desc">2021 年 4 月開幕,熊本最新複合設施。Day 2 還車後 + Day 3 さくら 上車前都會經過,行李寄物櫃方便。</p>
+        <ul class="shop-list">
+          <li><strong>UNIQLO · GU · 無印良品</strong></li>
+          <li><strong>UNITED ARROWS green label relaxing · niko and...</strong></li>
+          <li><strong>HANDS · LoFt · BORNELUND</strong></li>
+          <li><strong>肥後よかモン市場</strong> · 熊本伴手禮(辛子蓮根 / いきなり団子)</li>
+          <li><strong>KUMAMON Store</strong> · 部長周邊</li>
+        </ul>
+        <div class="shop-tip"><strong>Day 2 19:00</strong> 還車後可順逛;<strong>Day 3 15:30</strong> さくら 前留 1 小時補貨。</div>
+      </article>
+
+      <article class="shop-card">
+        <div class="shop-head">
+          <h4>下通 / 上通 商店街 + 鶴屋百貨 + COCOSA</h4>
+          <span class="shop-zone">通町筋電停</span>
+        </div>
+        <p class="shop-desc">熊本市區最熱鬧的拱廊商店街,從 KUMAMON SQUARE 步行 5 分鐘可達。<strong>鶴屋是熊本唯一綜合百貨</strong>,日牌齊全。</p>
+        <ul class="shop-list">
+          <li><strong>鶴屋百貨</strong> · MIKI HOUSE / familiar / BEAMS / tomorrowland</li>
+          <li><strong>COCOSA</strong> · BEAMS / niko and... / studio CLIP / 蔦屋書店</li>
+          <li><strong>下通 UNIQLO 旗艦店 · GU · ABC-MART</strong></li>
+          <li><strong>LoFt 熊本店</strong> · 上通入口處</li>
+          <li><strong>並木坂</strong> · 上通深處的文青小店街</li>
+        </ul>
+        <div class="shop-tip"><strong>Day 3</strong> KUMAMON 表演後 10:30-11:30 走逛 + 城彩苑午餐,或熊本城後 14:30-16:00 再繞回來。</div>
+      </article>
+    </div>
+  </div>
+
+  <!-- 別府 -->
+  <div class="shop-area">
+    <div class="shop-area-head">
+      <span class="area-jp">別</span>
+      <h3>別府</h3>
+      <span class="area-note">Day 1 PM</span>
+    </div>
+    <div class="shop-grid">
+      <article class="shop-card">
+        <div class="shop-head">
+          <h4>別府 · 溫泉鎮輕度購物</h4>
+          <span class="shop-zone">別府市內</span>
+        </div>
+        <p class="shop-desc">別府以溫泉為主,日牌購物選擇有限。建議放輕鬆泡湯,大採購留給福岡 / 熊本。湯之坪商店街與別府銀座有部分土產可逛。</p>
+        <ul class="shop-list">
+          <li><strong>湯布院 湯之坪商店街</strong> · 由布院吉祥物 / 和菓子 / 木雕(Day 1 下午會經過)</li>
+          <li><strong>B-speak</strong> · 湯之坪名店,P ロール 卷蛋糕</li>
+          <li><strong>YOUME TOWN 別府</strong> · 郊外大型 mall(UNIQLO / 無印 / 西松屋)</li>
+          <li><strong>TOKIWA 別府店</strong> · 在地老牌百貨,規模小</li>
+          <li><strong>杉乃井ホテル 內 souvenir 區</strong> · 大分名菓 ざびえる / 八鹿酒造</li>
+        </ul>
+        <div class="shop-tip">這趟別府段以泡湯為主,只買土產即可。湯之坪 14:00-16:00 散步時順買。</div>
+      </article>
+    </div>
+  </div>
+
+  <!-- 親子日牌 -->
+  <div class="shop-area">
+    <div class="shop-area-head">
+      <span class="area-jp">親</span>
+      <h3>親子日牌 · 一覽</h3>
+      <span class="area-note">Kids Brands</span>
+    </div>
+    <div class="shop-grid">
+      <article class="shop-card">
+        <div class="shop-head">
+          <h4>高端日牌</h4>
+          <span class="shop-zone">百貨專櫃</span>
+        </div>
+        <p class="shop-desc">日本經典親子品牌,品質好但價位高。台灣買貴一截,日本本地價格 + 退稅約 7 折。</p>
+        <ul class="shop-list">
+          <li><strong>MIKI HOUSE</strong> · 岩田屋 6F / 鶴屋 / 阪急博多</li>
+          <li><strong>familiar</strong> · 岩田屋 6F / 鶴屋 / 阪急博多</li>
+          <li><strong>組曲 KUMIKYOKU KIDS</strong> · 三越 / 鶴屋</li>
+          <li><strong>BORNELUND</strong> · AMU PLAZA 熊本 / 福岡 PARCO</li>
+        </ul>
+      </article>
+
+      <article class="shop-card">
+        <div class="shop-head">
+          <h4>平價育兒大賣場</h4>
+          <span class="shop-zone">郊外為主</span>
+        </div>
+        <p class="shop-desc">日常衣物 + 用品平價,西松屋價格甚至比 UNIQLO 還低。アカチャンホンポ 商品種類齊全,日本媽媽必逛。</p>
+        <ul class="shop-list">
+          <li><strong>アカチャンホンポ (Akachan Honpo)</strong> · キャナルシティ B1 / 鶴屋</li>
+          <li><strong>西松屋</strong> · 郊外型,YOUME TOWN 別府有</li>
+          <li><strong>BABIES R US (赤ちゃん)</strong> · 大型郊外店</li>
+          <li><strong>BIRTHDAY</strong> · キャナルシティ</li>
+        </ul>
+      </article>
+
+      <article class="shop-card">
+        <div class="shop-head">
+          <h4>玩具 / 周邊</h4>
+          <span class="shop-zone">主要商城</span>
+        </div>
+        <p class="shop-desc">小孩最容易失心瘋的區域。記得行李體積要先預留,大型玩具回國運費比商品還貴。</p>
+        <ul class="shop-list">
+          <li><strong>Pokemon Center 福岡</strong> · AMU PLAZA 博多 8F</li>
+          <li><strong>Kiddy Land 福岡</strong> · AMU PLAZA 博多 8F</li>
+          <li><strong>ジャンプショップ</strong> · キャナルシティ B1F</li>
+          <li><strong>麵包超人 公式 shop</strong> · 麵包超人博物館內(Day 5)</li>
+          <li><strong>KUMAMON Square / Store</strong> · 通町筋 / AMU 熊本</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+
+  <!-- 實用 -->
+  <div class="shop-area">
+    <div class="shop-area-head">
+      <span class="area-jp">買</span>
+      <h3>採購時機 + 退稅實務</h3>
+      <span class="area-note">When · How</span>
+    </div>
+    <div class="shop-grid">
+      <article class="shop-card">
+        <div class="shop-head">
+          <h4>七日採購時程建議</h4>
+          <span class="shop-zone">Day Map</span>
+        </div>
+        <ul class="shop-list">
+          <li><strong>Day 1</strong> · 湯之坪 14:30 土產輕買(20 分)</li>
+          <li><strong>Day 2</strong> · AMU PLAZA 熊本 19:00 還車後簡逛</li>
+          <li><strong>Day 3</strong> · 上午下通商店街 + 鶴屋(KUMAMON 後);晚運河城晚餐順買</li>
+          <li><strong>Day 5</strong> · <strong>主力購物日</strong>!天神百貨 + PARCO + SOLARIA 全天</li>
+          <li><strong>Day 6</strong> · 糸島回程順繞 AMU PLAZA 博多 18:00-19:30</li>
+          <li><strong>Day 7</strong> · 早上退房後 AMU PLAZA 補最後一波 + 太宰府土產</li>
+        </ul>
+        <div class="shop-tip"><strong>Day 5 全天</strong>是真正逛街日,其他天都只是順買。大件 / 重物盡量留 Day 6-7 因為 Day 6 起有租車。</div>
+      </article>
+
+      <article class="shop-card">
+        <div class="shop-head">
+          <h4>免稅與藥妝重點</h4>
+          <span class="shop-zone">Tax Free</span>
+        </div>
+        <p class="shop-desc">日本免稅門檻一店同日合計 ¥5,000+,百貨退稅櫃台統一辦理。退稅單會釘進護照,出境時不需出示。</p>
+        <ul class="shop-list">
+          <li><strong>消耗品 ¥5,000-¥500,000</strong>(藥妝 / 食品)需密封袋</li>
+          <li><strong>一般品 ¥5,000+</strong>(服飾 / 雜貨)無上限</li>
+          <li><strong>マツモトキヨシ · ココカラファイン · ドラッグイレブン</strong> · 任一條街都有</li>
+          <li><strong>Yodobashi 博多</strong> · 博多駅東口,電器 + 玩具大本營</li>
+          <li><strong>DON DON DONKI 中洲川端</strong> · 24 hr 退稅,夜晚補貨首選</li>
+        </ul>
+        <div class="shop-tip">藥妝建議集中在 1-2 家店一次買滿 ¥5,000+,免稅效率最高;百貨買服飾用一張退稅單合併處理。</div>
+      </article>
+
+      <article class="shop-card">
+        <div class="shop-head">
+          <h4>行李 · 體積 · 重量</h4>
+          <span class="shop-zone">Tips</span>
+        </div>
+        <p class="shop-desc">回程託運單件 23 kg / 個是普遍上限,易超重的是<strong>美妝 + 飲品 + 玩具盒</strong>。出發前用空行李箱裝最佳。</p>
+        <ul class="shop-list">
+          <li>大件玩具 / 模型 → Day 6-7 買,直接放車上</li>
+          <li>易碎品 → 用買來的衣物裹好</li>
+          <li>常溫食品 → 留 Day 7 太宰府 + AMU 補貨</li>
+          <li>Yodobashi 博多 / 阪急 B1 都提供 <strong>免費保冷袋</strong>(冷凍品專用)</li>
+        </ul>
+        <div class="shop-tip">Day 6-7 連租同台車最大好處:大件可直接丟車上,不用扛回飯店。</div>
+      </article>
+    </div>
+  </div>
+</section>
+
 <section class="transport">
   <div class="transport-inner">
     <h2 class="display">交通與預算<span class="jp-mark">指南</span></h2>
