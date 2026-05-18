@@ -860,6 +860,171 @@
   }
   .shop-card a:hover{color:var(--vermillion);border-bottom-color:var(--vermillion)}
 
+  /* ========== APP SHELL ========== */
+  .app{
+    display:flex;
+    min-height:100vh;
+    align-items:stretch;
+  }
+  .sidebar{
+    width:220px;
+    flex:0 0 220px;
+    position:sticky;
+    top:0;
+    align-self:flex-start;
+    height:100vh;
+    background:rgba(255,255,255,0.5);
+    border-right:1px solid var(--line);
+    padding:32px 18px;
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+    z-index:100;
+    backdrop-filter:blur(10px);
+  }
+  .sidebar-brand{
+    font-family:'Shippori Mincho', serif;
+    font-size:16px;
+    font-weight:700;
+    margin-bottom:16px;
+    padding:0 4px 14px;
+    border-bottom:1px solid var(--line);
+    color:var(--ink);
+    line-height:1.4;
+  }
+  .sidebar-brand .dates{
+    display:block;
+    font-size:10px;
+    letter-spacing:0.2em;
+    color:var(--muted);
+    margin-top:4px;
+    font-weight:400;
+  }
+  .sidebar-brand .stamp{
+    display:inline-block;
+    margin-top:10px;
+    font-family:'Yuji Syuku', serif;
+    color:var(--vermillion);
+    border:1px solid var(--vermillion);
+    padding:3px 8px;
+    font-size:10px;
+    border-radius:2px;
+  }
+  .nav-item{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:12px 14px;
+    background:transparent;
+    border:none;
+    border-radius:3px;
+    cursor:pointer;
+    font-family:'Shippori Mincho', serif;
+    text-align:left;
+    color:var(--ink-soft);
+    transition:all 0.2s ease;
+    font-size:14px;
+    font-weight:500;
+    width:100%;
+  }
+  .nav-item:hover{background:rgba(193,67,43,0.08)}
+  .nav-item .nav-num{
+    font-family:'Yuji Syuku', serif;
+    font-size:22px;
+    color:var(--vermillion);
+    line-height:1;
+    flex-shrink:0;
+    width:24px;
+    text-align:center;
+  }
+  .nav-item .nav-label{
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+  }
+  .nav-item .nav-en{
+    font-size:9px;
+    letter-spacing:0.2em;
+    color:var(--muted);
+    text-transform:uppercase;
+    font-weight:400;
+  }
+  .nav-item.is-active{background:var(--ink);color:var(--paper)}
+  .nav-item.is-active .nav-num{color:var(--vermillion-soft)}
+  .nav-item.is-active .nav-en{color:rgba(245,239,228,0.65)}
+  .sidebar-foot{
+    margin-top:auto;
+    padding-top:16px;
+    font-size:10px;
+    color:var(--muted);
+    letter-spacing:0.15em;
+    text-transform:uppercase;
+    border-top:1px solid var(--line);
+  }
+
+  .main-content{
+    flex:1;
+    min-width:0;
+  }
+
+  /* Mobile pill-nav (top sticky) */
+  .pill-nav{
+    display:none;
+    position:sticky;
+    top:0;
+    z-index:90;
+    background:rgba(245,239,228,0.92);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--line);
+    padding:10px 12px;
+    gap:6px;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    scroll-snap-type:x mandatory;
+  }
+  .pill-nav::-webkit-scrollbar{display:none}
+  .pill-item{
+    flex:0 0 auto;
+    scroll-snap-align:start;
+    padding:9px 14px;
+    background:rgba(255,255,255,0.7);
+    border:1px solid var(--line);
+    border-radius:24px;
+    cursor:pointer;
+    font-family:'Shippori Mincho', serif;
+    font-size:13px;
+    font-weight:600;
+    color:var(--ink-soft);
+    white-space:nowrap;
+    display:flex;
+    align-items:center;
+    gap:6px;
+    transition:all 0.2s ease;
+  }
+  .pill-item .nav-num{
+    font-family:'Yuji Syuku', serif;
+    color:var(--vermillion);
+    font-size:15px;
+    line-height:1;
+  }
+  .pill-item.is-active{
+    background:var(--ink);
+    color:var(--paper);
+    border-color:var(--ink);
+  }
+  .pill-item.is-active .nav-num{color:var(--vermillion-soft)}
+
+  /* View visibility */
+  .view{display:none;animation:fadeIn 0.4s ease}
+  .view.is-active{display:block}
+  .hero.view.is-active{display:flex}
+
+  @media (max-width: 900px){
+    .app{flex-direction:column}
+    .sidebar{display:none}
+    .pill-nav{display:flex}
+  }
+
   /* ========== FOOTER ========== */
   footer{
     padding:60px clamp(20px, 5vw, 64px);
@@ -894,11 +1059,12 @@
     .hero h1{font-size:54px}
     .tab-nav{
       position:sticky;
-      top:0;
+      top:58px;
       border-radius:0;
       margin-left:calc(clamp(20px, 5vw, 64px) * -1);
       margin-right:calc(clamp(20px, 5vw, 64px) * -1);
       padding:8px 12px;
+      z-index:80;
     }
     .tab-btn{min-width:78px;padding:10px 8px}
     .tab-btn .tab-date{font-size:14px}
@@ -915,8 +1081,11 @@
   /* print */
   @media print{
     body{background:white}
+    .sidebar, .pill-nav{display:none !important}
+    .view{display:block !important}
+    .hero.view{display:flex !important}
+    .day{display:block !important;page-break-inside:avoid}
     .hero{min-height:auto;page-break-after:always}
-    .day{page-break-inside:avoid}
     .transport{background:white;color:black}
     .shop-area{page-break-inside:avoid}
     .shop-card{background:white;break-inside:avoid}
@@ -925,8 +1094,49 @@
 </head>
 <body>
 
+<div class="app">
+
+<aside class="sidebar" aria-label="Section navigation">
+  <div class="sidebar-brand">
+    福岡親子 7 日
+    <span class="dates">2026.9.19 — 9.25</span>
+    <span class="stamp">家族旅行</span>
+  </div>
+  <button class="nav-item is-active" data-view="home">
+    <span class="nav-num">序</span>
+    <span class="nav-label">封面<span class="nav-en">Home</span></span>
+  </button>
+  <button class="nav-item" data-view="notes">
+    <span class="nav-num">壹</span>
+    <span class="nav-label">行前重點<span class="nav-en">Trip Notes</span></span>
+  </button>
+  <button class="nav-item" data-view="days">
+    <span class="nav-num">貳</span>
+    <span class="nav-label">每日行程<span class="nav-en">Day by Day</span></span>
+  </button>
+  <button class="nav-item" data-view="shopping">
+    <span class="nav-num">參</span>
+    <span class="nav-label">逛街購物<span class="nav-en">Shopping</span></span>
+  </button>
+  <button class="nav-item" data-view="transport">
+    <span class="nav-num">肆</span>
+    <span class="nav-label">交通預算<span class="nav-en">Transport</span></span>
+  </button>
+  <div class="sidebar-foot">Plan made for Jed</div>
+</aside>
+
+<main class="main-content">
+
+<nav class="pill-nav" aria-label="Section navigation (mobile)">
+  <button class="pill-item is-active" data-view="home"><span class="nav-num">序</span>封面</button>
+  <button class="pill-item" data-view="notes"><span class="nav-num">壹</span>行前</button>
+  <button class="pill-item" data-view="days"><span class="nav-num">貳</span>行程</button>
+  <button class="pill-item" data-view="shopping"><span class="nav-num">參</span>購物</button>
+  <button class="pill-item" data-view="transport"><span class="nav-num">肆</span>交通</button>
+</nav>
+
 <!-- HERO -->
-<section class="hero">
+<section class="hero view is-active" data-view="home">
   <div class="top-bar">
     <div>JED · FAMILY TRIP</div>
     <div class="stamp">家族旅行</div>
@@ -963,7 +1173,7 @@
 </section>
 
 <!-- OVERVIEW & TIPS -->
-<section class="overview">
+<section class="overview view" data-view="notes">
   <div class="section-head">
     <span class="num">壹</span>
     <h2 class="display">行前重點</h2>
@@ -1005,7 +1215,7 @@
 </section>
 
 <!-- DAYS -->
-<section class="days">
+<section class="days view" data-view="days">
   <div class="section-head">
     <span class="num">貳</span>
     <h2 class="display">每日行程</h2>
@@ -1813,7 +2023,7 @@
 </section>
 
 <!-- SHOPPING -->
-<section class="shopping">
+<section class="shopping view" data-view="shopping">
   <div class="section-head">
     <span class="num">參</span>
     <h2 class="display">逛街購物 · 日牌指南</h2>
@@ -2106,7 +2316,7 @@
   </div>
 </section>
 
-<section class="transport">
+<section class="transport view" data-view="transport">
   <div class="transport-inner">
     <h2 class="display">交通與預算<span class="jp-mark">指南</span></h2>
     <div class="transport-grid">
@@ -2155,6 +2365,9 @@
   <p>2026 / 9 · Fukuoka Family Itinerary</p>
   <p style="margin-top:8px;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;">Plan made for Jed</p>
 </footer>
+
+</main>
+</div>
 
 <script>
 (function(){
@@ -2349,15 +2562,42 @@
     if (target !== current) show(target, false);
   }, {passive: true});
 
+  // ============ View (top-level) switching ============
+  const VALID_VIEWS = ['home','notes','days','shopping','transport'];
+  const navButtons = document.querySelectorAll('.nav-item, .pill-item');
+  const views = document.querySelectorAll('section.view');
+
+  function showView(viewId, scroll){
+    if (!VALID_VIEWS.includes(viewId)) viewId = 'home';
+    views.forEach(v => v.classList.toggle('is-active', v.dataset.view === viewId));
+    navButtons.forEach(b => b.classList.toggle('is-active', b.dataset.view === viewId));
+    if (viewId === 'days') {
+      const activeDay = document.querySelector('.tab-btn.is-active');
+      const dayId = activeDay ? activeDay.dataset.day : '1';
+      history.replaceState(null, '', '#day' + dayId);
+      initMap(dayId);
+      setTimeout(() => { const m = maps[dayId]; if (m) m.invalidateSize(); }, 80);
+    } else {
+      history.replaceState(null, '', '#' + viewId);
+    }
+    if (scroll) window.scrollTo({top:0, behavior:'smooth'});
+  }
+
+  navButtons.forEach(btn => {
+    btn.addEventListener('click', () => showView(btn.dataset.view, true));
+  });
+
   // ============ Boot ============
   function boot(){
-    // Initialize the active (first) day's map immediately
-    const hash = window.location.hash.match(/day(\d+)/);
-    const startDay = hash && hash[1] ? hash[1] : '1';
-    if (startDay !== '1') {
-      show(startDay, false);
+    const hash = window.location.hash;
+    const dayMatch = hash.match(/^#day(\d+)$/);
+    if (dayMatch) {
+      showView('days', false);
+      show(dayMatch[1], false);
     } else {
-      initMap('1');
+      const v = hash.replace('#','');
+      const startView = VALID_VIEWS.includes(v) ? v : 'home';
+      showView(startView, false);
     }
   }
 
