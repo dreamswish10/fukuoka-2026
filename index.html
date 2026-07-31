@@ -860,6 +860,195 @@
   }
   .shop-card a:hover{color:var(--vermillion);border-bottom-color:var(--vermillion)}
 
+  /* ========== PACKING LIST ========== */
+  .packing{
+    padding:0 clamp(20px, 5vw, 64px) 80px;
+    max-width:1400px;
+    margin:0 auto;
+  }
+  .packing-intro{
+    background:rgba(255,255,255,0.55);
+    border:1px solid var(--line);
+    border-left:3px solid var(--vermillion);
+    padding:18px 22px;
+    border-radius:4px;
+    margin-bottom:32px;
+    font-size:14px;
+    line-height:1.75;
+    color:var(--ink-soft);
+    backdrop-filter:blur(8px);
+  }
+  .packing-intro strong{color:var(--vermillion);font-weight:600}
+  .packing-progress{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    margin-bottom:24px;
+    padding:16px 20px;
+    background:rgba(255,255,255,0.6);
+    border:1px solid var(--line);
+    border-radius:4px;
+    backdrop-filter:blur(6px);
+  }
+  .packing-progress .count{
+    font-family:'Shippori Mincho', serif;
+    font-weight:700;
+    font-size:15px;
+    color:var(--ink);
+    white-space:nowrap;
+  }
+  .packing-progress .bar{
+    flex:1;
+    height:8px;
+    background:var(--paper-2);
+    border-radius:4px;
+    overflow:hidden;
+  }
+  .packing-progress .bar-fill{
+    height:100%;
+    background:var(--vermillion);
+    border-radius:4px;
+    transition:width 0.3s ease;
+  }
+  .packing-add{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:32px;
+    padding:18px 20px;
+    background:rgba(255,255,255,0.6);
+    border:1px solid var(--line);
+    border-radius:4px;
+    backdrop-filter:blur(6px);
+  }
+  .packing-add input[type="text"],
+  .packing-add select{
+    font-family:'Noto Sans TC', sans-serif;
+    font-size:14px;
+    padding:10px 12px;
+    border:1px solid var(--line);
+    border-radius:2px;
+    background:var(--paper);
+    color:var(--ink);
+  }
+  .packing-add input[type="text"]{flex:1;min-width:180px}
+  .packing-add select{min-width:140px}
+  .packing-add button{
+    padding:10px 22px;
+    background:var(--ink);
+    color:var(--paper);
+    border:none;
+    border-radius:2px;
+    cursor:pointer;
+    font-family:'Shippori Mincho', serif;
+    font-weight:600;
+    font-size:14px;
+    transition:background 0.2s ease;
+  }
+  .packing-add button:hover{background:var(--vermillion)}
+  .packing-groups{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));
+    gap:18px;
+  }
+  .pack-group{
+    background:rgba(255,255,255,0.6);
+    border:1px solid var(--line);
+    border-radius:4px;
+    padding:20px 22px;
+    backdrop-filter:blur(6px);
+    box-shadow:var(--shadow);
+  }
+  .pack-group-head{
+    display:flex;
+    align-items:baseline;
+    gap:10px;
+    margin-bottom:12px;
+    padding-bottom:10px;
+    border-bottom:1px solid var(--line);
+  }
+  .pack-group-head .icon{
+    font-family:'Yuji Syuku', serif;
+    font-size:20px;
+    color:var(--vermillion);
+  }
+  .pack-group-head h4{
+    font-family:'Shippori Mincho', serif;
+    font-size:16px;
+    font-weight:700;
+    color:var(--ink);
+    flex:1;
+  }
+  .pack-group-head .g-count{
+    font-size:11px;
+    color:var(--muted);
+    letter-spacing:0.05em;
+    white-space:nowrap;
+  }
+  .pack-list{list-style:none;padding:0;margin:0}
+  .pack-item{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    padding:8px 0;
+    border-bottom:1px dashed var(--line);
+  }
+  .pack-item:last-child{border-bottom:none}
+  .pack-item input[type="checkbox"]{
+    margin-top:3px;
+    width:16px;
+    height:16px;
+    accent-color:var(--vermillion);
+    cursor:pointer;
+    flex:0 0 auto;
+  }
+  .pack-item label{
+    flex:1;
+    font-size:13px;
+    color:var(--ink-soft);
+    line-height:1.6;
+    cursor:pointer;
+  }
+  .pack-item.is-checked label{
+    color:var(--muted);
+    text-decoration:line-through;
+  }
+  .pack-item .del-btn{
+    flex:0 0 auto;
+    background:none;
+    border:none;
+    color:var(--muted);
+    cursor:pointer;
+    font-size:17px;
+    line-height:1;
+    padding:0 2px;
+    opacity:0.45;
+    transition:opacity 0.2s ease, color 0.2s ease;
+  }
+  .pack-item .del-btn:hover{opacity:1;color:var(--vermillion)}
+  .packing-empty{
+    text-align:center;
+    padding:60px 20px;
+    color:var(--muted);
+    font-size:14px;
+    grid-column:1/-1;
+  }
+  .packing-reset{
+    margin-top:28px;
+    text-align:right;
+  }
+  .packing-reset button{
+    background:transparent;
+    border:1px solid var(--line);
+    color:var(--muted);
+    padding:8px 16px;
+    border-radius:2px;
+    font-size:12px;
+    cursor:pointer;
+    transition:all 0.2s ease;
+  }
+  .packing-reset button:hover{border-color:var(--vermillion);color:var(--vermillion)}
+
   /* ========== APP SHELL ========== */
   .app{
     display:flex;
@@ -1122,6 +1311,10 @@
     <span class="nav-num">肆</span>
     <span class="nav-label">交通預算<span class="nav-en">Transport</span></span>
   </button>
+  <button class="nav-item" data-view="packing">
+    <span class="nav-num">伍</span>
+    <span class="nav-label">行前準備<span class="nav-en">Packing List</span></span>
+  </button>
   <div class="sidebar-foot">Plan made for Jed</div>
 </aside>
 
@@ -1133,6 +1326,7 @@
   <button class="pill-item" data-view="days"><span class="nav-num">貳</span>行程</button>
   <button class="pill-item" data-view="shopping"><span class="nav-num">參</span>購物</button>
   <button class="pill-item" data-view="transport"><span class="nav-num">肆</span>交通</button>
+  <button class="pill-item" data-view="packing"><span class="nav-num">伍</span>準備</button>
 </nav>
 
 <!-- HERO -->
@@ -2547,6 +2741,36 @@
   </div>
 </section>
 
+<!-- PACKING LIST -->
+<section class="packing view" data-view="packing">
+  <div class="section-head">
+    <span class="num">伍</span>
+    <h2 class="display">行前準備<span class="jp-mark">清單</span></h2>
+    <span class="tag">Packing List</span>
+  </div>
+
+  <div class="packing-intro">
+    先幫 <strong>2 大 + 2 小(4 歲男孩、7 歲女孩)</strong> 列好家庭旅行常見必備項目,勾選代表已經準備好。清單存在<strong>這台裝置的瀏覽器裡</strong>,可以自己新增或刪除項目,換裝置或清瀏覽器資料會重置。
+  </div>
+
+  <div class="packing-progress">
+    <span class="count" id="packing-count">0 / 0</span>
+    <div class="bar"><div class="bar-fill" id="packing-bar" style="width:0%"></div></div>
+  </div>
+
+  <form class="packing-add" id="packing-add-form">
+    <input type="text" id="packing-new-text" placeholder="新增項目,例如:兒童雨鞋" required>
+    <select id="packing-new-category"></select>
+    <button type="submit">+ 新增</button>
+  </form>
+
+  <div class="packing-groups" id="packing-groups"></div>
+
+  <div class="packing-reset">
+    <button type="button" id="packing-reset-btn">全部重設為未勾選</button>
+  </div>
+</section>
+
 <footer>
   <div class="stamp">良き旅を</div>
   <p>2026 / 9 · Fukuoka Family Itinerary</p>
@@ -2758,7 +2982,7 @@
   }, {passive: true});
 
   // ============ View (top-level) switching ============
-  const VALID_VIEWS = ['home','notes','days','shopping','transport'];
+  const VALID_VIEWS = ['home','notes','days','shopping','transport','packing'];
   const navButtons = document.querySelectorAll('.nav-item, .pill-item');
   const views = document.querySelectorAll('section.view');
 
@@ -2802,6 +3026,203 @@
     // Leaflet loads with defer, wait for it
     window.addEventListener('load', boot);
   }
+})();
+</script>
+
+<script>
+(function(){
+  const STORAGE_KEY = 'fukuoka2026_packing_v1';
+
+  const DEFAULT_ITEMS = [
+    ['證件與金錢','護照(效期需 6 個月以上,全家 4 本)'],
+    ['證件與金錢','日幣現金'],
+    ['證件與金錢','信用卡(可海外提款 / 刷卡)'],
+    ['證件與金錢','國際駕照 + 台灣駕照正本'],
+    ['證件與金錢','電子機票 + 訂房證明'],
+    ['證件與金錢','旅遊不便險保單'],
+    ['證件與金錢','健保卡'],
+    ['證件與金錢','兒童英文版疫苗紀錄'],
+    ['證件與金錢','緊急聯絡卡(飯店 / 租車資訊)'],
+    ['電子產品','手機 + 充電線 x2'],
+    ['電子產品','行動電源'],
+    ['電子產品','平板(先下載好離線卡通給小孩)'],
+    ['電子產品','相機 / 記憶卡'],
+    ['電子產品','車用手機架'],
+    ['電子產品','eSIM 或 WiFi 分享機'],
+    ['藥品與盥洗','兒童常備藥(退燒藥、感冒藥、腸胃藥)'],
+    ['藥品與盥洗','大人常備藥'],
+    ['藥品與盥洗','體溫計'],
+    ['藥品與盥洗','OK 繃'],
+    ['藥品與盥洗','防蚊液'],
+    ['藥品與盥洗','暈車藥 / 暈車貼(阿蘇、高千穂山路多彎)'],
+    ['藥品與盥洗','防曬乳'],
+    ['藥品與盥洗','個人盥洗用品'],
+    ['4 歲男孩','尿布 / 練習褲(視戒尿布狀況)'],
+    ['4 歲男孩','濕紙巾'],
+    ['4 歲男孩','安撫玩偶'],
+    ['4 歲男孩','小汽車 / 貼紙書(長途開車用)'],
+    ['4 歲男孩','兒童牙刷牙膏'],
+    ['4 歲男孩','兒童餐具 / 圍兜'],
+    ['7 歲女孩','畫本 + 色鉛筆'],
+    ['7 歲女孩','簡單讀本 / 貼紙書'],
+    ['7 歲女孩','兒童耳機'],
+    ['7 歲女孩','個人小背包'],
+    ['兩小孩共用','換洗衣物(天數 + 1 套備用)'],
+    ['兩小孩共用','兒童雨衣 / 雨傘'],
+    ['兩小孩共用','水壺'],
+    ['兩小孩共用','防走失手環 / 定位器'],
+    ['兩小孩共用','泳衣(白糸の滝玩水、海濱公園)'],
+    ['兩小孩共用','拖鞋 / 涼鞋'],
+    ['兩小孩共用','車用兒童安全座椅(先跟 Times 確認有無提供)'],
+    ['衣物','短袖 + 薄外套(日夜溫差 6-8°C)'],
+    ['衣物','大人泳衣'],
+    ['衣物','拖鞋'],
+    ['衣物','輕便雨具'],
+    ['其他','環保購物袋(日本塑膠袋收費)'],
+    ['其他','行李秤'],
+    ['其他','折疊隨身袋(裝戰利品用)'],
+    ['其他','常備零食(飛機 / 長途開車用)']
+  ];
+
+  const CATEGORY_ORDER = ['證件與金錢','電子產品','藥品與盥洗','4 歲男孩','7 歲女孩','兩小孩共用','衣物','其他'];
+  const CATEGORY_ICON = {
+    '證件與金錢':'證','電子產品':'電','藥品與盥洗':'藥',
+    '4 歲男孩':'男','7 歲女孩':'女','兩小孩共用':'童',
+    '衣物':'衣','其他':'他'
+  };
+
+  function seedItems(){
+    return DEFAULT_ITEMS.map((pair, i) => ({
+      id: 'seed-' + i,
+      category: pair[0],
+      text: pair[1],
+      checked: false
+    }));
+  }
+
+  function loadItems(){
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) return JSON.parse(raw);
+    } catch(e) {}
+    const seeded = seedItems();
+    saveItems(seeded);
+    return seeded;
+  }
+
+  function saveItems(list){
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(list)); } catch(e) {}
+  }
+
+  const groupsEl = document.getElementById('packing-groups');
+  if (!groupsEl) return;
+
+  let items = loadItems();
+
+  const countEl = document.getElementById('packing-count');
+  const barEl = document.getElementById('packing-bar');
+  const categorySelect = document.getElementById('packing-new-category');
+  const addForm = document.getElementById('packing-add-form');
+  const newTextInput = document.getElementById('packing-new-text');
+  const resetBtn = document.getElementById('packing-reset-btn');
+
+  function escapeHtml(str){
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  function currentCategories(){
+    const list = CATEGORY_ORDER.slice();
+    items.forEach(it => { if (!list.includes(it.category)) list.push(it.category); });
+    return list;
+  }
+
+  function render(){
+    const cats = currentCategories();
+
+    categorySelect.innerHTML = cats.map(c =>
+      '<option value="' + escapeHtml(c) + '">' + escapeHtml(c) + '</option>'
+    ).join('');
+
+    groupsEl.innerHTML = '';
+    let totalChecked = 0;
+
+    cats.forEach(cat => {
+      const catItems = items.filter(it => it.category === cat);
+      if (catItems.length === 0) return;
+      const checkedCount = catItems.filter(it => it.checked).length;
+      totalChecked += checkedCount;
+
+      const group = document.createElement('div');
+      group.className = 'pack-group';
+      group.innerHTML =
+        '<div class="pack-group-head">' +
+          '<span class="icon">' + escapeHtml(CATEGORY_ICON[cat] || '項') + '</span>' +
+          '<h4>' + escapeHtml(cat) + '</h4>' +
+          '<span class="g-count">' + checkedCount + '/' + catItems.length + '</span>' +
+        '</div>' +
+        '<ul class="pack-list"></ul>';
+
+      const list = group.querySelector('.pack-list');
+      catItems.forEach(it => {
+        const li = document.createElement('li');
+        li.className = 'pack-item' + (it.checked ? ' is-checked' : '');
+        const cbId = 'chk-' + it.id;
+        li.innerHTML =
+          '<input type="checkbox" id="' + cbId + '"' + (it.checked ? ' checked' : '') + '>' +
+          '<label for="' + cbId + '">' + escapeHtml(it.text) + '</label>' +
+          '<button type="button" class="del-btn" aria-label="刪除">×</button>';
+
+        li.querySelector('input').addEventListener('change', (e) => {
+          it.checked = e.target.checked;
+          saveItems(items);
+          render();
+        });
+        li.querySelector('.del-btn').addEventListener('click', () => {
+          items = items.filter(x => x.id !== it.id);
+          saveItems(items);
+          render();
+        });
+        list.appendChild(li);
+      });
+
+      groupsEl.appendChild(group);
+    });
+
+    const total = items.length;
+    countEl.textContent = total === 0 ? '0 / 0' : (totalChecked + ' / ' + total);
+    barEl.style.width = total === 0 ? '0%' : Math.round(totalChecked / total * 100) + '%';
+
+    if (total === 0) {
+      groupsEl.innerHTML = '<div class="packing-empty">目前沒有項目,從上面新增第一項吧。</div>';
+    }
+  }
+
+  addForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const text = newTextInput.value.trim();
+    if (!text) return;
+    const category = categorySelect.value || '其他';
+    items.push({
+      id: 'custom-' + Date.now() + '-' + Math.random().toString(36).slice(2, 7),
+      category: category,
+      text: text,
+      checked: false
+    });
+    saveItems(items);
+    newTextInput.value = '';
+    render();
+  });
+
+  resetBtn.addEventListener('click', () => {
+    if (!window.confirm('確定要把全部項目取消勾選嗎?(不會刪除項目)')) return;
+    items.forEach(it => { it.checked = false; });
+    saveItems(items);
+    render();
+  });
+
+  render();
 })();
 </script>
 
