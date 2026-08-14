@@ -1049,6 +1049,162 @@
   }
   .packing-reset button:hover{border-color:var(--vermillion);color:var(--vermillion)}
 
+  /* ========== POCKET LIST ========== */
+  .places{
+    padding:0 clamp(20px, 5vw, 64px) 80px;
+    max-width:1400px;
+    margin:0 auto;
+  }
+  .places-intro{
+    background:rgba(255,255,255,0.55);
+    border:1px solid var(--line);
+    border-left:3px solid var(--vermillion);
+    padding:18px 22px;
+    border-radius:4px;
+    margin-bottom:24px;
+    font-size:14px;
+    line-height:1.75;
+    color:var(--ink-soft);
+    backdrop-filter:blur(8px);
+  }
+  .places-intro strong{color:var(--vermillion);font-weight:600}
+  .places-search{
+    position:sticky;
+    top:0;
+    z-index:40;
+    padding:14px 0 12px;
+    background:linear-gradient(var(--paper) 78%, rgba(245,239,228,0));
+  }
+  .places-search input{
+    width:100%;
+    font-family:'Noto Sans TC', sans-serif;
+    font-size:15px;
+    padding:12px 16px;
+    border:1px solid var(--line);
+    border-radius:3px;
+    background:rgba(255,255,255,0.85);
+    color:var(--ink);
+    backdrop-filter:blur(6px);
+  }
+  .places-search input:focus{outline:none;border-color:var(--vermillion)}
+  .places-filters{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-top:10px;
+  }
+  .filter-chip{
+    padding:6px 14px;
+    font-size:12px;
+    font-family:'Shippori Mincho', serif;
+    border:1px solid var(--line);
+    background:rgba(255,255,255,0.7);
+    color:var(--ink-soft);
+    border-radius:99px;
+    cursor:pointer;
+    transition:all 0.2s ease;
+    white-space:nowrap;
+  }
+  .filter-chip:hover{border-color:var(--vermillion);color:var(--vermillion)}
+  .filter-chip.is-active{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .places-count{
+    font-size:12px;
+    color:var(--muted);
+    margin:14px 0 16px;
+    letter-spacing:0.05em;
+  }
+  .places-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(320px, 1fr));
+    gap:14px;
+  }
+  .place-card{
+    background:rgba(255,255,255,0.62);
+    border:1px solid var(--line);
+    border-radius:4px;
+    padding:16px 18px;
+    backdrop-filter:blur(6px);
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    transition:border-color 0.2s ease, transform 0.2s ease;
+  }
+  .place-card:hover{border-color:rgba(193,67,43,0.35);transform:translateY(-2px)}
+  .place-top{
+    display:flex;
+    align-items:baseline;
+    gap:8px;
+    flex-wrap:wrap;
+  }
+  .place-name{
+    font-family:'Shippori Mincho', serif;
+    font-size:16px;
+    font-weight:700;
+    color:var(--ink);
+    line-height:1.35;
+  }
+  .place-cat{
+    font-size:10px;
+    letter-spacing:0.1em;
+    padding:3px 8px;
+    border-radius:2px;
+    background:var(--paper-2);
+    color:var(--ink-soft);
+    white-space:nowrap;
+  }
+  .place-cat.c-cafe{background:#ead7c4;color:#8a6427}
+  .place-cat.c-bread{background:#f2e3cd;color:#96702c}
+  .place-cat.c-food{background:#eed4d4;color:var(--vermillion)}
+  .place-cat.c-izakaya{background:#e2d6ea;color:#6f4a8a}
+  .place-cat.c-shop{background:#d8dfeb;color:var(--indigo)}
+  .place-cat.c-market{background:#dde6cf;color:var(--moss)}
+  .place-new{
+    font-size:10px;
+    letter-spacing:0.1em;
+    padding:3px 7px;
+    border-radius:2px;
+    background:var(--vermillion);
+    color:var(--paper);
+    font-weight:600;
+  }
+  .place-meta{
+    font-size:12px;
+    color:var(--muted);
+    line-height:1.6;
+  }
+  .place-meta .sep{opacity:0.4;margin:0 6px}
+  .place-day{
+    display:inline-block;
+    font-size:11px;
+    font-family:'Shippori Mincho', serif;
+    color:var(--vermillion);
+    border:1px solid rgba(193,67,43,0.35);
+    padding:1px 8px;
+    border-radius:99px;
+    white-space:nowrap;
+  }
+  .place-note{
+    font-size:13px;
+    color:var(--ink-soft);
+    line-height:1.6;
+  }
+  .place-card a.place-map{
+    align-self:flex-start;
+    margin-top:4px;
+    font-size:12px;
+    color:var(--indigo);
+    text-decoration:none;
+    border-bottom:1px solid rgba(45,74,124,0.3);
+  }
+  .place-card a.place-map:hover{color:var(--vermillion);border-bottom-color:var(--vermillion)}
+  .places-empty{
+    grid-column:1/-1;
+    text-align:center;
+    padding:60px 20px;
+    color:var(--muted);
+    font-size:14px;
+  }
+
   /* ========== APP SHELL ========== */
   .app{
     display:flex;
@@ -1311,8 +1467,12 @@
     <span class="nav-num">肆</span>
     <span class="nav-label">交通預算<span class="nav-en">Transport</span></span>
   </button>
-  <button class="nav-item" data-view="packing">
+  <button class="nav-item" data-view="places">
     <span class="nav-num">伍</span>
+    <span class="nav-label">口袋名單<span class="nav-en">All Places</span></span>
+  </button>
+  <button class="nav-item" data-view="packing">
+    <span class="nav-num">陸</span>
     <span class="nav-label">行前準備<span class="nav-en">Packing List</span></span>
   </button>
   <div class="sidebar-foot">Plan made for Jed</div>
@@ -1326,7 +1486,8 @@
   <button class="pill-item" data-view="days"><span class="nav-num">貳</span>行程</button>
   <button class="pill-item" data-view="shopping"><span class="nav-num">參</span>購物</button>
   <button class="pill-item" data-view="transport"><span class="nav-num">肆</span>交通</button>
-  <button class="pill-item" data-view="packing"><span class="nav-num">伍</span>準備</button>
+  <button class="pill-item" data-view="places"><span class="nav-num">伍</span>名單</button>
+  <button class="pill-item" data-view="packing"><span class="nav-num">陸</span>準備</button>
 </nav>
 
 <!-- HERO -->
@@ -1941,7 +2102,7 @@
       </div>
       <div class="day-title">
         <h3>海之中道 · 水族館與大公園</h3>
-        <p class="narrative">JR 香椎線 40 分到海之中道,上午水族館看海豚秀,下午海濱公園租自行車繞大池與秋花田。整天慢節奏,給孩子放電,大人喘口氣。</p>
+        <p class="narrative">一早先到六本松吃 AMAM DACOTAN 麵包配 COFFEE MAN 咖啡,JR 香椎線 40 分到海之中道,上午水族館看海豚秀,下午海濱公園租自行車繞大池與秋花田。整天慢節奏,給孩子放電,大人喘口氣。</p>
       </div>
       <div class="day-date">
         <div class="date-mm">9.22</div>
@@ -1959,6 +2120,24 @@
     </div>
 
     <div class="timeline">
+      <div class="stop is-major">
+        <div class="stop-time"><div class="hh">08:00</div><div class="dur">50 min</div></div>
+        <div class="stop-card">
+          <div class="stop-head"><div class="stop-name">六本松 早餐 · AMAM DACOTAN + COFFEE MAN</div><span class="stop-type food">Bakery + Coffee</span></div>
+          <div class="stop-notes">兩家都在<strong>六本松駅 2 番口</strong>附近,彼此走路 2 分鐘,從唐人町穿過大濠公園走過去約 20 分,或開車 8 分。<strong>AMAM DACOTAN 六本松店</strong>(六本松 3-7-6):福岡排隊麵包名店,惣菜麵包種類爆多,約 8:00 開門,<strong>不定休(有一說週三公休)</strong>,早去才有得挑。<strong>COFFEE MAN</strong>(六本松 4-5-23,藏在路地奥):自家烘焙精品咖啡,08:00-20:00、<strong>週一公休</strong>,10 席小店,咖啡 ¥500 起。麵包外帶配咖啡,吃完剛好回程出發。</div>
+          <div class="stop-actions">
+            <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=amam+dacotan+ropponmatsu" target="_blank">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              AMAM DACOTAN
+            </a>
+            <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=COFFEEMAN+Ropponmatsu+Fukuoka" target="_blank">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              COFFEE MAN
+            </a>
+          </div>
+        </div>
+      </div>
+
       <div class="stop">
         <div class="stop-time"><div class="hh">09:00</div><div class="dur">45 min</div></div>
         <div class="stop-card">
@@ -2131,7 +2310,7 @@
       </div>
       <div class="day-title">
         <h3>糸島 · 自駕海岸線</h3>
-        <p class="narrative">從唐人町開車出發到糸島半島,夫婦岩 + 白鳥居拍照、海邊咖啡午餐,下午白糸瀑布玩水,傍晚順路逛在地選物雜貨店,黃昏農產直賣所掃伴手禮。</p>
+        <p class="narrative">從唐人町開車出發到糸島半島,夫婦岩 + 白鳥居拍照、海邊咖啡午餐,下午白糸瀑布玩水,傍晚順路逛在地選物雜貨店,黃昏農產直賣所掃伴手禮,晚上到平尾「鶏と肴」吃居酒屋。</p>
       </div>
       <div class="day-date">
         <div class="date-mm">9.24</div>
@@ -2231,7 +2410,21 @@
         <div class="stop-time"><div class="hh">18:00</div><div class="dur">90 min</div></div>
         <div class="stop-card">
           <div class="stop-head"><div class="stop-name">回唐人町 · 大濠 / 天神 補貨 + 月極停車</div><span class="stop-type">Return</span></div>
-          <div class="stop-notes">高速回唐人町約 30 分,可順道<strong>繞天神大丸 B2F / 三越 B2F 順買伴手禮 30-40 分</strong>(明太子、博多通饅頭、ひよ子),或停 AMU PLAZA 博多 也可(加 10 分)。<strong>車不還</strong>,停 Airbnb 附近月極停車場(唐人町 / 西新 / 大濠公園 周邊,¥1,500-2,000/晚)。晚餐 Airbnb 附近大濠居酒屋,或散步去天神中洲屋台。</div>
+          <div class="stop-notes">高速回唐人町約 30 分,可順道<strong>繞天神大丸 B2F / 三越 B2F 順買伴手禮 30-40 分</strong>(明太子、博多通饅頭、ひよ子),或停 AMU PLAZA 博多 也可(加 10 分)。<strong>車不還</strong>,停 Airbnb 附近月極停車場(唐人町 / 西新 / 大濠公園 周邊,¥1,500-2,000/晚)。</div>
+        </div>
+      </div>
+
+      <div class="stop is-major">
+        <div class="stop-time"><div class="hh">18:30</div><div class="dur">90 min</div></div>
+        <div class="stop-card">
+          <div class="stop-head"><div class="stop-name">鶏と肴 晚餐(平尾)</div><span class="stop-type food">Izakaya</span></div>
+          <div class="stop-notes">福岡市中央区平尾 1-9-6,<strong>營業 17:00-23:00、不定期公休</strong>,雞料理 + 海鮮居酒屋。車停好後從唐人町搭地下鐵到藥院 → 西鐵平尾,或直接叫車約 15 分。<strong>建議提早訂位並先確認當天有無公休</strong>;帶小孩的話 17:30-18:00 早場人少最舒服。不想跑遠的備案:唐人町 / 大濠周邊居酒屋,或散步去天神中洲屋台。</div>
+          <div class="stop-actions">
+            <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=鶏と肴+平尾+福岡" target="_blank">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              在 Google 地圖開啟
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -2741,10 +2934,31 @@
   </div>
 </section>
 
+<!-- POCKET LIST -->
+<section class="places view" data-view="places">
+  <div class="section-head">
+    <span class="num">伍</span>
+    <h2 class="display">口袋名單<span class="jp-mark">速查</span></h2>
+    <span class="tag">All Places</span>
+  </div>
+
+  <div class="places-intro">
+    把散在每日行程與購物指南裡的<strong>店家全部集中在這一頁</strong>,可以直接搜尋店名 / 地區 / 特色,或用分類篩選。標<strong>「新」</strong>的是最新加入的口袋名單。旅途中想吃東西、找咖啡時,直接開這頁最快。
+  </div>
+
+  <div class="places-search">
+    <input type="text" id="places-q" placeholder="搜尋店名、地區、特色…例如:咖啡、六本松、豬排">
+    <div class="places-filters" id="places-filters"></div>
+  </div>
+
+  <div class="places-count" id="places-count"></div>
+  <div class="places-grid" id="places-grid"></div>
+</section>
+
 <!-- PACKING LIST -->
 <section class="packing view" data-view="packing">
   <div class="section-head">
-    <span class="num">伍</span>
+    <span class="num">陸</span>
     <h2 class="display">行前準備<span class="jp-mark">清單</span></h2>
     <span class="tag">Packing List</span>
   </div>
@@ -2814,10 +3028,11 @@
       {n:'4', name:'博多運河城', sub:'18:30 拉麵晚餐', lat:33.5896305, lng:130.4109478, type:'end'}
     ]},
     4: { center:[33.63, 130.40], stops:[
-      {n:'1', name:'唐人町駅 出發', sub:'09:00 地下鐵空港線', lat:33.5872, lng:130.3835, type:'start'},
-      {n:'2', name:'マリンワールド海の中道', sub:'10:00 水族館', lat:33.6720, lng:130.3528},
-      {n:'3', name:'海之中道海濱公園', sub:'13:30 大公園', lat:33.6630, lng:130.3550},
-      {n:'4', name:'博多 もつ鍋', sub:'19:00 晚餐', lat:33.5897275, lng:130.4207274, type:'end'}
+      {n:'1', name:'六本松 早餐', sub:'08:00 AMAM DACOTAN + COFFEE MAN', lat:33.5806, lng:130.3782, type:'start'},
+      {n:'2', name:'唐人町駅 出發', sub:'09:00 地下鐵空港線', lat:33.5872, lng:130.3835},
+      {n:'3', name:'マリンワールド海の中道', sub:'10:00 水族館', lat:33.6720, lng:130.3528},
+      {n:'4', name:'海之中道海濱公園', sub:'13:30 大公園', lat:33.6630, lng:130.3550},
+      {n:'5', name:'博多 もつ鍋', sub:'19:00 晚餐', lat:33.5897275, lng:130.4207274, type:'end'}
     ]},
     5: { center:[33.59, 130.40], stops:[
       {n:'1', name:'アンパンマン博物館', sub:'09:30 進館', lat:33.5947, lng:130.4093, type:'start'},
@@ -2832,7 +3047,8 @@
       {n:'4', name:'白糸の滝', sub:'14:00 玩水', lat:33.5277, lng:130.2086},
       {n:'5', name:'伊都菜彩', sub:'16:30 蔬果', lat:33.5605, lng:130.2407},
       {n:'6', name:'糸島くらし×ここのき', sub:'17:15 選物雜貨', lat:33.5695, lng:130.2005},
-      {n:'7', name:'唐人町 停車', sub:'18:00 回程(車不還)', lat:33.5887, lng:130.3815, type:'end'}
+      {n:'7', name:'唐人町 停車', sub:'18:00 回程(車不還)', lat:33.5887, lng:130.3815},
+      {n:'8', name:'鶏と肴(平尾)', sub:'18:30 居酒屋晚餐', lat:33.5748, lng:130.4013, type:'end'}
     ]},
     7: { center:[33.55, 130.44], stops:[
       {n:'1', name:'唐人町 退房', sub:'09:00 退房 + 行李上車', lat:33.5887, lng:130.3815, type:'start'},
@@ -2982,7 +3198,7 @@
   }, {passive: true});
 
   // ============ View (top-level) switching ============
-  const VALID_VIEWS = ['home','notes','days','shopping','transport','packing'];
+  const VALID_VIEWS = ['home','notes','days','shopping','transport','places','packing'];
   const navButtons = document.querySelectorAll('.nav-item, .pill-item');
   const views = document.querySelectorAll('section.view');
 
@@ -3031,6 +3247,133 @@
 
 <script>
 (function(){
+  // ============ Pocket list of every named place ============
+  const CATS = [
+    ['all','全部'], ['cafe','咖啡'], ['bread','麵包甜點'], ['food','餐廳'],
+    ['izakaya','居酒屋・屋台'], ['shop','選物・購物'], ['market','市場・直賣所']
+  ];
+
+  const PLACES = [
+    // --- 咖啡 ---
+    {n:'COFFEE MAN', c:'cafe', area:'福岡 六本松', hours:'08:00-20:00 · 週一公休', day:'Day 4 早餐', note:'六本松 4-5-23,藏在路地奥的自家烘焙精品咖啡,10 席小店,一杯 ¥500 起。', map:'COFFEEMAN+Ropponmatsu+Fukuoka', isNew:true},
+    {n:'草千里珈琲焙煎所', c:'cafe', area:'阿蘇 草千里', hours:'', day:'Day 2', note:'標高 1000m,熊本「珈琲回廊」經營,緣側露台座位可看草千里全景。', map:'Kusasenri+Coffee+Roastery+Aso'},
+    {n:'Up to U Coffee', c:'cafe', area:'福岡 警固', hours:'', day:'Day 5 彈性', note:'けやき通り上的隱藏咖啡館,被古董家具環繞。', map:'Up+to+U+Coffee+Fukuoka'},
+    {n:'abeki', c:'cafe', area:'福岡 薬院', hours:'', day:'Day 5 彈性', note:'玻璃帷幕外觀 + 水晶吊燈,手作起司蛋糕有名。', map:'abeki+Yakuin+Fukuoka'},
+    {n:'白金茶房', c:'cafe', area:'福岡 薬院', hours:'', day:'Day 5 彈性', note:'福岡產小麥鬆餅 + 世界冠軍烘豆師的原創綜合咖啡。', map:'Shirokane+Sabou+Fukuoka'},
+    {n:'Lamplight Books Cafe 福岡', c:'cafe', area:'福岡 大名', hours:'', day:'Day 5 彈性', note:'飯店內的書店咖啡,用 FUGLEN 的咖啡豆。', map:'Lamplight+Books+Cafe+Fukuoka'},
+    {n:'Cafe La Ruche', c:'cafe', area:'由布院 金鱗湖畔', hours:'', day:'Day 1', note:'金鱗湖畔散步時順道喝杯熱拿鐵。', map:'Cafe+La+Ruche+Yufuin'},
+    {n:'タナカフェ', c:'cafe', area:'糸島 前原', hours:'', day:'Day 6', note:'在「糸島くらし×ここのき」店內,逛完雜貨直接坐下來休息。', map:'Itoshima+Kurashi+Kokonoki'},
+
+    // --- 麵包甜點 ---
+    {n:'AMAM DACOTAN 六本松店', c:'bread', area:'福岡 六本松', hours:'約 08:00 開 · 不定休(一說週三)', day:'Day 4 早餐', note:'六本松 3-7-6,福岡排隊麵包名店,惣菜麵包種類爆多,早去才有得挑。', map:'amam+dacotan+ropponmatsu', isNew:true},
+    {n:'B-speak', c:'bread', area:'由布院 湯之坪', hours:'', day:'Day 1', note:'湯之坪名店,招牌 P ロール 蛋糕卷。', map:'B-speak+Yufuin'},
+    {n:'友永パンや', c:'bread', area:'別府 駅前', hours:'', day:'Day 1', note:'別府百年麵包店,アンパン 是招牌。', map:'Tomonaga+Pan+Beppu'},
+
+    // --- 餐廳 ---
+    {n:'水天壽司 石垣店', c:'food', area:'別府 石垣西', hours:'', day:'Day 2 午餐', note:'別府市石垣西 10-1-32,大分縣產鮮魚的活魚回轉壽司,小孩也吃得慣。', map:'Suiten+Beppu+Ishigaki'},
+    {n:'勝烈亭 新市街本店', c:'food', area:'熊本 新市街', hours:'11:00-21:30 (LO 21:00)', day:'Day 2 晚餐', note:'熊本市新市街 8-18,熊本老牌豬排名店,離 OMO5 步行約 10 分。', map:'Katsuretsutei+Shinshigai+Kumamoto'},
+    {n:'黒亭', c:'food', area:'熊本 下通', hours:'', day:'Day 2 備案', note:'熊本拉麵代表店,飯店徒步 5 分內。', map:'Kokutei+Kumamoto'},
+    {n:'桂花', c:'food', area:'熊本 下通', hours:'', day:'Day 2 備案', note:'熊本拉麵元祖。', map:'Keika+Ramen+Kumamoto'},
+    {n:'馬桜', c:'food', area:'熊本 下通', hours:'', day:'Day 2 備案', note:'馬刺し專門店。', map:'Basakura+Kumamoto'},
+    {n:'湯之岳庵', c:'food', area:'由布院', hours:'', day:'Day 1 午餐', note:'亀の井別荘內的洋食套餐。', map:'Yunotakean+Yufuin'},
+    {n:'Yufumabushi 心', c:'food', area:'由布院', hours:'', day:'Day 1 午餐', note:'豐後牛櫃まぶし,由布院人氣店。', map:'Yufumabushi+Shin+Yufuin'},
+    {n:'くらや', c:'food', area:'由布院', hours:'', day:'Day 1 午餐', note:'地產蕎麥麵。', map:'Kuraya+Yufuin+soba'},
+    {n:'とよ常 本店', c:'food', area:'別府 駅前', hours:'', day:'Day 1 晚餐', note:'關鯵海鮮天丼,別府老舖。', map:'Toyotsune+Beppu'},
+    {n:'豊後茶屋', c:'food', area:'別府 駅前', hours:'', day:'Day 1 晚餐', note:'大分とり天 + 別府冷麺二刀流。', map:'Bungo+Chaya+Beppu'},
+    {n:'柊 ひいらぎ', c:'food', area:'別府 駅前', hours:'', day:'Day 1 晚餐', note:'本格炭烤豐後牛。', map:'Hiiragi+Beppu'},
+    {n:'もつ鍋 おおやま 博多本店', c:'food', area:'博多 駅前一番街', hours:'', day:'Day 4 晚餐', note:'博多必吃內臟鍋,家庭友善,小孩可分小碗。', map:'Motsunabe+Ooyama+Hakata'},
+    {n:'博多もつ鍋 やま中', c:'food', area:'博多', hours:'', day:'Day 4 備案', note:'味噌系もつ鍋名店。', map:'Motsunabe+Yamanaka+Hakata'},
+    {n:'拉麵競技場(運河城 B1F)', c:'food', area:'博多 中洲川端', hours:'', day:'Day 3 / Day 5', note:'一風堂、一蘭、博多元助齊聚,給小孩拉麵初體驗。', map:'Ramen+Stadium+Canal+City+Hakata'},
+    {n:'カフェアラジン / La Beach', c:'food', area:'海之中道海濱公園內', hours:'', day:'Day 4 午餐', note:'公園內的海邊景觀餐廳,也可買輕食野餐。', map:'Uminonakamichi+Seaside+Park'},
+    {n:'梅の花', c:'food', area:'太宰府 表參道', hours:'', day:'Day 7 午餐', note:'湯葉懷石 / 豆腐料理。表參道還有隈研吾設計的星巴克。', map:'Umenohana+Dazaifu'},
+    {n:'Sunset Cafe', c:'food', area:'糸島 海岸', hours:'', day:'Day 6 午餐', note:'海景開放露台 + 沙坑,小孩可放電,平日較好排隊。', map:'Sunset+Cafe+Itoshima'},
+    {n:'Bistrot Mitsou', c:'food', area:'糸島 海岸', hours:'', day:'Day 6 備案', note:'糸島高人氣法式小館。', map:'Bistrot+Mitsou+Itoshima'},
+    {n:'CURRENT', c:'food', area:'糸島 海岸', hours:'', day:'Day 6 備案', note:'沖繩風海邊咖啡餐廳。', map:'CURRENT+Itoshima'},
+
+    // --- 居酒屋・屋台 ---
+    {n:'鶏と肴', c:'izakaya', area:'福岡 平尾', hours:'17:00-23:00 · 不定期公休', day:'Day 6 晚餐', note:'中央区平尾 1-9-6,雞料理 + 海鮮居酒屋。建議提早訂位並確認當天是否公休,帶小孩坐 17:30 早場最舒服。', map:'鶏と肴+平尾+福岡', isNew:true},
+    {n:'中洲屋台', c:'izakaya', area:'博多 那珂川河畔', hours:'傍晚起', day:'Day 5 晚餐', note:'沿岸 20+ 攤,博多代表夜景。現金為主,早點去佔位。', map:'Nakasu+Yatai'},
+
+    // --- 選物・購物 ---
+    {n:'H.L.D.', c:'shop', area:'福岡 大名', hours:'', day:'Day 5 彈性', note:'Vitra / Fritz Hansen / Herman Miller 進口家具,九州最大 Vitra 賣場。', map:'H.L.D.+Daimyo+Fukuoka'},
+    {n:'糸島くらし×ここのき', c:'shop', area:'糸島 前原商店街', hours:'', day:'Day 6', note:'糸島在地作家的器皿、木工、編織小物,店內附設タナカフェ。', map:'Itoshima+Kurashi+Kokonoki'},
+    {n:'bbb haus', c:'shop', area:'糸島 玄海国定公園', hours:'', day:'Day 6 彈性', note:'海景咖啡廳 + 生活道具選物店二合一,簡約實用的居家小物。', map:'bbb+haus+Itoshima'},
+    {n:'岩田屋本店', c:'shop', area:'福岡 天神', hours:'', day:'Day 5', note:'1F 專櫃彩妝最齊(SK-II / CPB / Dior / CHANEL / RMK / SUQQU)。', map:'Iwataya+Honten+Tenjin'},
+    {n:'大丸福岡天神店', c:'shop', area:'福岡 天神', hours:'', day:'Day 5', note:'B1-1F 化妝品館,跟岩田屋走路 5 分鐘可互相比價。', map:'Daimaru+Fukuoka+Tenjin'},
+    {n:'天神地下街', c:'shop', area:'福岡 天神', hours:'', day:'Day 5', note:'600m 歐風地下街,下雨天首選。', map:'Tenjin+Underground+Mall'},
+    {n:'AMU PLAZA 博多', c:'shop', area:'博多駅', hours:'', day:'Day 7', note:'B1 Hakata Marche 九州伴手禮一站搞定,8F Pokemon Center。', map:'Amu+Plaza+Hakata'},
+    {n:'由布院フローラルヴィレッジ', c:'shop', area:'由布院', hours:'09:30-17:30', day:'Day 1', note:'英國 Cotswolds 風童話village,約 20 家個性小店。', map:'Yufuin+Floral+Village'},
+
+    // --- 市場・直賣所 ---
+    {n:'伊都菜彩', c:'market', area:'糸島', hours:'', day:'Day 6', note:'九州最大 JA 直賣所,糸島蔬菜、海鮮、雞蛋、限定果醬啤酒。', map:'Ito+Saisai'},
+    {n:'城彩苑', c:'market', area:'熊本城下', hours:'', day:'(已改行程)', note:'熊本城腳下江戶風美食街,這趟 Day 3 改去高千穂後沒排到,有多的時間再考慮。', map:'Sakuranobaba+Johsaien'}
+  ];
+
+  const gridEl = document.getElementById('places-grid');
+  if (gridEl) {
+    const qEl = document.getElementById('places-q');
+    const filtersEl = document.getElementById('places-filters');
+    const countEl = document.getElementById('places-count');
+    let activeCat = 'all';
+
+    filtersEl.innerHTML = CATS.map(([id, label]) =>
+      '<button type="button" class="filter-chip' + (id === 'all' ? ' is-active' : '') + '" data-cat="' + id + '">' + label + '</button>'
+    ).join('');
+
+    function esc(s){
+      const d = document.createElement('div');
+      d.textContent = s;
+      return d.innerHTML;
+    }
+
+    function renderPlaces(){
+      const q = qEl.value.trim().toLowerCase();
+      const catLabel = Object.fromEntries(CATS);
+      const matched = PLACES.filter(p => {
+        if (activeCat !== 'all' && p.c !== activeCat) return false;
+        if (!q) return true;
+        return (p.n + ' ' + p.area + ' ' + p.note + ' ' + p.day + ' ' + (catLabel[p.c] || ''))
+          .toLowerCase().includes(q);
+      });
+
+      countEl.textContent = '共 ' + matched.length + ' 間' + (q || activeCat !== 'all' ? '(已篩選,總共 ' + PLACES.length + ' 間)' : '');
+
+      if (matched.length === 0) {
+        gridEl.innerHTML = '<div class="places-empty">找不到符合的店家,換個關鍵字試試。</div>';
+        return;
+      }
+
+      gridEl.innerHTML = matched.map(p =>
+        '<div class="place-card">' +
+          '<div class="place-top">' +
+            '<span class="place-name">' + esc(p.n) + '</span>' +
+            '<span class="place-cat c-' + p.c + '">' + esc(catLabel[p.c] || '') + '</span>' +
+            (p.isNew ? '<span class="place-new">新</span>' : '') +
+          '</div>' +
+          '<div class="place-meta">' + esc(p.area) +
+            (p.hours ? '<span class="sep">|</span>' + esc(p.hours) : '') +
+            ' <span class="place-day">' + esc(p.day) + '</span>' +
+          '</div>' +
+          '<div class="place-note">' + esc(p.note) + '</div>' +
+          '<a class="place-map" href="https://www.google.com/maps/search/?api=1&query=' +
+            encodeURIComponent(p.map) + '" target="_blank" rel="noopener">在 Google 地圖開啟 →</a>' +
+        '</div>'
+      ).join('');
+    }
+
+    qEl.addEventListener('input', renderPlaces);
+    filtersEl.addEventListener('click', (e) => {
+      const chip = e.target.closest('.filter-chip');
+      if (!chip) return;
+      activeCat = chip.dataset.cat;
+      filtersEl.querySelectorAll('.filter-chip').forEach(c =>
+        c.classList.toggle('is-active', c === chip));
+      renderPlaces();
+    });
+
+    renderPlaces();
+  }
+
   const STORAGE_KEY = 'fukuoka2026_packing_v1';
 
   const DEFAULT_ITEMS = [
