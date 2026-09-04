@@ -1107,10 +1107,93 @@
   }
   .filter-chip:hover{border-color:var(--vermillion);color:var(--vermillion)}
   .filter-chip.is-active{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .places-toolbar{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    flex-wrap:wrap;
+    margin:16px 0 18px;
+  }
   .places-count{
     font-size:12px;
     color:var(--muted);
-    margin:14px 0 16px;
+    letter-spacing:0.05em;
+  }
+  .places-modes{
+    display:inline-flex;
+    border:1px solid var(--line);
+    border-radius:3px;
+    overflow:hidden;
+    background:rgba(255,255,255,0.7);
+  }
+  .pv-mode{
+    padding:7px 18px;
+    font-family:'Shippori Mincho', serif;
+    font-size:13px;
+    border:none;
+    background:transparent;
+    color:var(--ink-soft);
+    cursor:pointer;
+    transition:all 0.2s ease;
+  }
+  .pv-mode + .pv-mode{border-left:1px solid var(--line)}
+  .pv-mode:hover{color:var(--vermillion)}
+  .pv-mode.is-active{background:var(--ink);color:var(--paper)}
+  .places-csv{
+    margin-left:auto;
+    padding:8px 16px;
+    font-size:12px;
+    font-family:'Shippori Mincho', serif;
+    border:1px solid var(--indigo);
+    background:transparent;
+    color:var(--indigo);
+    border-radius:2px;
+    cursor:pointer;
+    transition:all 0.2s ease;
+  }
+  .places-csv:hover{background:var(--indigo);color:var(--paper)}
+  .places-map-wrap{
+    border:1px solid var(--line);
+    border-radius:4px;
+    overflow:hidden;
+    box-shadow:var(--shadow);
+    margin-bottom:24px;
+  }
+  #places-map{
+    width:100%;
+    height:520px;
+    background:#e8e2d3;
+  }
+  .place-pin{
+    width:18px;
+    height:18px;
+    border-radius:50%;
+    border:2px solid var(--paper);
+    box-shadow:0 2px 6px rgba(0,0,0,0.3);
+  }
+  .places-map-legend{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    flex-wrap:wrap;
+    padding:12px 16px;
+    background:rgba(255,255,255,0.85);
+    border-top:1px solid var(--line);
+    font-size:12px;
+    color:var(--ink-soft);
+    backdrop-filter:blur(8px);
+  }
+  .places-map-legend span{display:inline-flex;align-items:center;gap:6px}
+  .places-map-legend i{
+    width:11px;
+    height:11px;
+    border-radius:50%;
+    display:inline-block;
+  }
+  .places-map-legend .hint{
+    margin-left:auto;
+    color:var(--muted);
+    font-size:11px;
     letter-spacing:0.05em;
   }
   .places-grid{
@@ -1158,6 +1241,8 @@
   .place-cat.c-izakaya{background:#e2d6ea;color:#6f4a8a}
   .place-cat.c-shop{background:#d8dfeb;color:var(--indigo)}
   .place-cat.c-market{background:#dde6cf;color:var(--moss)}
+  .place-cat.c-kids{background:#f3d9e4;color:#a83a63}
+  .place-cat.c-spot{background:#cfe5e0;color:#0f6b5e}
   .place-new{
     font-size:10px;
     letter-spacing:0.1em;
@@ -1416,6 +1501,7 @@
     .day-nav{flex-direction:column;gap:10px}
     .day-nav button{max-width:none}
     .day-map{height:260px}
+    #places-map{height:380px}
     .shop-area-head{flex-wrap:wrap;gap:10px}
     .shop-area-head .area-note{margin-left:0;flex-basis:100%}
     .shop-card{padding:18px}
@@ -2943,7 +3029,8 @@
   </div>
 
   <div class="places-intro">
-    把散在每日行程與購物指南裡的<strong>店家全部集中在這一頁</strong>,可以直接搜尋店名 / 地區 / 特色,或用分類篩選。標<strong>「新」</strong>的是最新加入的口袋名單。旅途中想吃東西、找咖啡時,直接開這頁最快。
+    把散在每日行程與購物指南裡的<strong>店家全部集中在這一頁</strong>,可以搜尋店名 / 地區 / 特色、用分類篩選,或切成<strong>地圖模式</strong>看分布。標<strong>「新」</strong>的是最新加入的。<br>
+    要在手機上導航,按<strong>「匯出 CSV」</strong>下載檔案 → 到 <a href="https://www.google.com/maps/d/" target="_blank" rel="noopener">Google 我的地圖</a>「建立新地圖 → 匯入」上傳,選<strong>緯度/經度</strong>當位置、<strong>名稱</strong>當標題,再用「分類」分層,就會自動生出所有圖釘。
   </div>
 
   <div class="places-search">
@@ -2951,7 +3038,30 @@
     <div class="places-filters" id="places-filters"></div>
   </div>
 
-  <div class="places-count" id="places-count"></div>
+  <div class="places-toolbar">
+    <div class="places-modes">
+      <button type="button" class="pv-mode is-active" data-mode="list">清單</button>
+      <button type="button" class="pv-mode" data-mode="map">地圖</button>
+    </div>
+    <span class="places-count" id="places-count"></span>
+    <button type="button" class="places-csv" id="places-csv">↓ 匯出 CSV(給 Google 我的地圖)</button>
+  </div>
+
+  <div class="places-map-wrap" id="places-map-wrap" hidden>
+    <div id="places-map"></div>
+    <div class="places-map-legend" id="places-map-legend">
+      <span><i style="background:#8a6427"></i>咖啡</span>
+      <span><i style="background:#96702c"></i>麵包甜點</span>
+      <span><i style="background:#c1432b"></i>餐廳</span>
+      <span><i style="background:#6f4a8a"></i>居酒屋</span>
+      <span><i style="background:#c94f7c"></i>玩具童裝</span>
+      <span><i style="background:#2d4a7c"></i>選物購物</span>
+      <span><i style="background:#5a6b3a"></i>市場</span>
+      <span><i style="background:#0f7b6c"></i>景點</span>
+      <span class="hint">圖釘為概略位置,導航請點圖釘裡的 Google 地圖連結</span>
+    </div>
+  </div>
+
   <div class="places-grid" id="places-grid"></div>
 </section>
 
@@ -3250,63 +3360,82 @@
   // ============ Pocket list of every named place ============
   const CATS = [
     ['all','全部'], ['cafe','咖啡'], ['bread','麵包甜點'], ['food','餐廳'],
-    ['izakaya','居酒屋・屋台'], ['shop','選物・購物'], ['market','市場・直賣所']
+    ['izakaya','居酒屋・屋台'], ['kids','玩具・童裝'], ['shop','選物・購物'],
+    ['market','市場・直賣所'], ['spot','景點']
   ];
 
+  // n=名稱 c=分類 area=地區 hours=營業時間 day=排定 note=備註 addr=地址 map=Google搜尋字串 lat/lng=座標
   const PLACES = [
     // --- 咖啡 ---
-    {n:'COFFEE MAN', c:'cafe', area:'福岡 六本松', hours:'08:00-20:00 · 週一公休', day:'Day 4 早餐', note:'六本松 4-5-23,藏在路地奥的自家烘焙精品咖啡,10 席小店,一杯 ¥500 起。', map:'COFFEEMAN+Ropponmatsu+Fukuoka', isNew:true},
-    {n:'草千里珈琲焙煎所', c:'cafe', area:'阿蘇 草千里', hours:'', day:'Day 2', note:'標高 1000m,熊本「珈琲回廊」經營,緣側露台座位可看草千里全景。', map:'Kusasenri+Coffee+Roastery+Aso'},
-    {n:'Up to U Coffee', c:'cafe', area:'福岡 警固', hours:'', day:'Day 5 彈性', note:'けやき通り上的隱藏咖啡館,被古董家具環繞。', map:'Up+to+U+Coffee+Fukuoka'},
-    {n:'abeki', c:'cafe', area:'福岡 薬院', hours:'', day:'Day 5 彈性', note:'玻璃帷幕外觀 + 水晶吊燈,手作起司蛋糕有名。', map:'abeki+Yakuin+Fukuoka'},
-    {n:'白金茶房', c:'cafe', area:'福岡 薬院', hours:'', day:'Day 5 彈性', note:'福岡產小麥鬆餅 + 世界冠軍烘豆師的原創綜合咖啡。', map:'Shirokane+Sabou+Fukuoka'},
-    {n:'Lamplight Books Cafe 福岡', c:'cafe', area:'福岡 大名', hours:'', day:'Day 5 彈性', note:'飯店內的書店咖啡,用 FUGLEN 的咖啡豆。', map:'Lamplight+Books+Cafe+Fukuoka'},
-    {n:'Cafe La Ruche', c:'cafe', area:'由布院 金鱗湖畔', hours:'', day:'Day 1', note:'金鱗湖畔散步時順道喝杯熱拿鐵。', map:'Cafe+La+Ruche+Yufuin'},
-    {n:'タナカフェ', c:'cafe', area:'糸島 前原', hours:'', day:'Day 6', note:'在「糸島くらし×ここのき」店內,逛完雜貨直接坐下來休息。', map:'Itoshima+Kurashi+Kokonoki'},
+    {n:'COFFEE MAN', c:'cafe', area:'福岡 六本松', hours:'08:00-20:00 · 週一公休', day:'Day 4 早餐', note:'藏在路地奥的自家烘焙精品咖啡,10 席小店,一杯 ¥500 起。', addr:'福岡県福岡市中央区六本松4-5-23', map:'COFFEEMAN+Ropponmatsu+Fukuoka', lat:33.5797, lng:130.3766, isNew:true},
+    {n:'草千里珈琲焙煎所', c:'cafe', area:'阿蘇 草千里', hours:'', day:'Day 2', note:'標高 1000m,熊本「珈琲回廊」經營,緣側露台座位可看草千里全景。', addr:'熊本県阿蘇市草千里', map:'Kusasenri+Coffee+Roastery+Aso', lat:32.8846, lng:131.0585},
+    {n:'Up to U Coffee', c:'cafe', area:'福岡 警固', hours:'', day:'Day 5 彈性', note:'けやき通り上的隱藏咖啡館,被古董家具環繞。', addr:'福岡県福岡市中央区警固', map:'Up+to+U+Coffee+Fukuoka', lat:33.5844, lng:130.3910},
+    {n:'abeki', c:'cafe', area:'福岡 薬院', hours:'', day:'Day 5 彈性', note:'玻璃帷幕外觀 + 水晶吊燈,手作起司蛋糕有名。', addr:'福岡県福岡市中央区薬院', map:'abeki+Yakuin+Fukuoka', lat:33.5820, lng:130.3980},
+    {n:'白金茶房', c:'cafe', area:'福岡 薬院', hours:'', day:'Day 5 彈性', note:'福岡產小麥鬆餅 + 世界冠軍烘豆師的原創綜合咖啡。', addr:'福岡県福岡市中央区白金', map:'Shirokane+Sabou+Fukuoka', lat:33.5790, lng:130.4010},
+    {n:'Lamplight Books Cafe 福岡', c:'cafe', area:'福岡 大名', hours:'', day:'Day 5 彈性', note:'飯店內的書店咖啡,用 FUGLEN 的咖啡豆。', addr:'福岡県福岡市中央区大名', map:'Lamplight+Books+Cafe+Fukuoka', lat:33.5873, lng:130.3944},
+    {n:'Cafe La Ruche', c:'cafe', area:'由布院 金鱗湖畔', hours:'', day:'Day 1', note:'金鱗湖畔散步時順道喝杯熱拿鐵。', addr:'大分県由布市湯布院町川上', map:'Cafe+La+Ruche+Yufuin', lat:33.2640, lng:131.3624},
+    {n:'タナカフェ', c:'cafe', area:'糸島 前原', hours:'', day:'Day 6', note:'在「糸島くらし×ここのき」店內,逛完雜貨直接坐下來休息。', addr:'福岡県糸島市前原中央', map:'Itoshima+Kurashi+Kokonoki', lat:33.5695, lng:130.2005},
 
     // --- 麵包甜點 ---
-    {n:'AMAM DACOTAN 六本松店', c:'bread', area:'福岡 六本松', hours:'約 08:00 開 · 不定休(一說週三)', day:'Day 4 早餐', note:'六本松 3-7-6,福岡排隊麵包名店,惣菜麵包種類爆多,早去才有得挑。', map:'amam+dacotan+ropponmatsu', isNew:true},
-    {n:'B-speak', c:'bread', area:'由布院 湯之坪', hours:'', day:'Day 1', note:'湯之坪名店,招牌 P ロール 蛋糕卷。', map:'B-speak+Yufuin'},
-    {n:'友永パンや', c:'bread', area:'別府 駅前', hours:'', day:'Day 1', note:'別府百年麵包店,アンパン 是招牌。', map:'Tomonaga+Pan+Beppu'},
+    {n:'AMAM DACOTAN 六本松店', c:'bread', area:'福岡 六本松', hours:'約 08:00 開 · 不定休(一說週三)', day:'Day 4 早餐', note:'福岡排隊麵包名店,惣菜麵包種類爆多,早去才有得挑。', addr:'福岡県福岡市中央区六本松3-7-6', map:'amam+dacotan+ropponmatsu', lat:33.5806, lng:130.3782, isNew:true},
+    {n:'またいちの塩 工房とったん(花鹽布丁)', c:'bread', area:'糸島 芥屋', hours:'10:00-17:00', day:'Day 6 可加', note:'海邊製鹽所,招牌「灑鹽吃的布丁」花塩プリン。位置在糸島西端芥屋,比夫婦岩再往西約 20 分。', addr:'福岡県糸島市志摩芥屋3757', map:'またいちの塩+工房とったん', lat:33.6122, lng:130.1466, isNew:true},
+    {n:'B-speak', c:'bread', area:'由布院 湯之坪', hours:'', day:'Day 1', note:'湯之坪名店,招牌 P ロール 蛋糕卷。', addr:'大分県由布市湯布院町川上', map:'B-speak+Yufuin', lat:33.2632, lng:131.3556},
+    {n:'友永パンや', c:'bread', area:'別府 駅前', hours:'', day:'Day 1', note:'別府百年麵包店,アンパン 是招牌。', addr:'大分県別府市千代町', map:'Tomonaga+Pan+Beppu', lat:33.2836, lng:131.5013},
 
     // --- 餐廳 ---
-    {n:'水天壽司 石垣店', c:'food', area:'別府 石垣西', hours:'', day:'Day 2 午餐', note:'別府市石垣西 10-1-32,大分縣產鮮魚的活魚回轉壽司,小孩也吃得慣。', map:'Suiten+Beppu+Ishigaki'},
-    {n:'勝烈亭 新市街本店', c:'food', area:'熊本 新市街', hours:'11:00-21:30 (LO 21:00)', day:'Day 2 晚餐', note:'熊本市新市街 8-18,熊本老牌豬排名店,離 OMO5 步行約 10 分。', map:'Katsuretsutei+Shinshigai+Kumamoto'},
-    {n:'黒亭', c:'food', area:'熊本 下通', hours:'', day:'Day 2 備案', note:'熊本拉麵代表店,飯店徒步 5 分內。', map:'Kokutei+Kumamoto'},
-    {n:'桂花', c:'food', area:'熊本 下通', hours:'', day:'Day 2 備案', note:'熊本拉麵元祖。', map:'Keika+Ramen+Kumamoto'},
-    {n:'馬桜', c:'food', area:'熊本 下通', hours:'', day:'Day 2 備案', note:'馬刺し專門店。', map:'Basakura+Kumamoto'},
-    {n:'湯之岳庵', c:'food', area:'由布院', hours:'', day:'Day 1 午餐', note:'亀の井別荘內的洋食套餐。', map:'Yunotakean+Yufuin'},
-    {n:'Yufumabushi 心', c:'food', area:'由布院', hours:'', day:'Day 1 午餐', note:'豐後牛櫃まぶし,由布院人氣店。', map:'Yufumabushi+Shin+Yufuin'},
-    {n:'くらや', c:'food', area:'由布院', hours:'', day:'Day 1 午餐', note:'地產蕎麥麵。', map:'Kuraya+Yufuin+soba'},
-    {n:'とよ常 本店', c:'food', area:'別府 駅前', hours:'', day:'Day 1 晚餐', note:'關鯵海鮮天丼,別府老舖。', map:'Toyotsune+Beppu'},
-    {n:'豊後茶屋', c:'food', area:'別府 駅前', hours:'', day:'Day 1 晚餐', note:'大分とり天 + 別府冷麺二刀流。', map:'Bungo+Chaya+Beppu'},
-    {n:'柊 ひいらぎ', c:'food', area:'別府 駅前', hours:'', day:'Day 1 晚餐', note:'本格炭烤豐後牛。', map:'Hiiragi+Beppu'},
-    {n:'もつ鍋 おおやま 博多本店', c:'food', area:'博多 駅前一番街', hours:'', day:'Day 4 晚餐', note:'博多必吃內臟鍋,家庭友善,小孩可分小碗。', map:'Motsunabe+Ooyama+Hakata'},
-    {n:'博多もつ鍋 やま中', c:'food', area:'博多', hours:'', day:'Day 4 備案', note:'味噌系もつ鍋名店。', map:'Motsunabe+Yamanaka+Hakata'},
-    {n:'拉麵競技場(運河城 B1F)', c:'food', area:'博多 中洲川端', hours:'', day:'Day 3 / Day 5', note:'一風堂、一蘭、博多元助齊聚,給小孩拉麵初體驗。', map:'Ramen+Stadium+Canal+City+Hakata'},
-    {n:'カフェアラジン / La Beach', c:'food', area:'海之中道海濱公園內', hours:'', day:'Day 4 午餐', note:'公園內的海邊景觀餐廳,也可買輕食野餐。', map:'Uminonakamichi+Seaside+Park'},
-    {n:'梅の花', c:'food', area:'太宰府 表參道', hours:'', day:'Day 7 午餐', note:'湯葉懷石 / 豆腐料理。表參道還有隈研吾設計的星巴克。', map:'Umenohana+Dazaifu'},
-    {n:'Sunset Cafe', c:'food', area:'糸島 海岸', hours:'', day:'Day 6 午餐', note:'海景開放露台 + 沙坑,小孩可放電,平日較好排隊。', map:'Sunset+Cafe+Itoshima'},
-    {n:'Bistrot Mitsou', c:'food', area:'糸島 海岸', hours:'', day:'Day 6 備案', note:'糸島高人氣法式小館。', map:'Bistrot+Mitsou+Itoshima'},
-    {n:'CURRENT', c:'food', area:'糸島 海岸', hours:'', day:'Day 6 備案', note:'沖繩風海邊咖啡餐廳。', map:'CURRENT+Itoshima'},
+    {n:'水天壽司 石垣店', c:'food', area:'別府 石垣西', hours:'', day:'Day 2 午餐', note:'大分縣產鮮魚的活魚回轉壽司,小孩也吃得慣。', addr:'大分県別府市石垣西10-1-32', map:'Suiten+Beppu+Ishigaki', lat:33.3050, lng:131.5150},
+    {n:'勝烈亭 新市街本店', c:'food', area:'熊本 新市街', hours:'11:00-21:30 (LO 21:00)', day:'Day 2 晚餐', note:'熊本老牌豬排名店,離 OMO5 步行約 10 分。', addr:'熊本県熊本市中央区新市街8-18', map:'Katsuretsutei+Shinshigai+Kumamoto', lat:32.8020, lng:130.7045},
+    {n:'黒亭', c:'food', area:'熊本 下通', hours:'', day:'Day 2 備案', note:'熊本拉麵代表店。', addr:'熊本県熊本市中央区下通', map:'Kokutei+Kumamoto', lat:32.8050, lng:130.7081},
+    {n:'桂花', c:'food', area:'熊本 下通', hours:'', day:'Day 2 備案', note:'熊本拉麵元祖。', addr:'熊本県熊本市中央区下通', map:'Keika+Ramen+Kumamoto', lat:32.8047, lng:130.7078},
+    {n:'馬桜', c:'food', area:'熊本 下通', hours:'', day:'Day 2 備案', note:'馬刺し專門店。', addr:'熊本県熊本市中央区下通', map:'Basakura+Kumamoto', lat:32.8052, lng:130.7075},
+    {n:'湯之岳庵', c:'food', area:'由布院', hours:'', day:'Day 1 午餐', note:'亀の井別荘內的洋食套餐。', addr:'大分県由布市湯布院町川上2633-1', map:'Yunotakean+Yufuin', lat:33.2646, lng:131.3573},
+    {n:'Yufumabushi 心', c:'food', area:'由布院', hours:'', day:'Day 1 午餐', note:'豐後牛櫃まぶし,由布院人氣店。', addr:'大分県由布市湯布院町川北', map:'Yufumabushi+Shin+Yufuin', lat:33.2624, lng:131.3549},
+    {n:'くらや', c:'food', area:'由布院', hours:'', day:'Day 1 午餐', note:'地產蕎麥麵。', addr:'大分県由布市湯布院町川上', map:'Kuraya+Yufuin+soba', lat:33.2635, lng:131.3560},
+    {n:'とよ常 本店', c:'food', area:'別府 駅前', hours:'', day:'Day 1 晚餐', note:'關鯵海鮮天丼,別府老舖。', addr:'大分県別府市北浜2-13-11', map:'Toyotsune+Beppu', lat:33.2840, lng:131.5010},
+    {n:'豊後茶屋', c:'food', area:'別府 駅前', hours:'', day:'Day 1 晚餐', note:'大分とり天 + 別府冷麺二刀流。', addr:'大分県別府市駅前町', map:'Bungo+Chaya+Beppu', lat:33.2845, lng:131.5020},
+    {n:'柊 ひいらぎ', c:'food', area:'別府 駅前', hours:'', day:'Day 1 晚餐', note:'本格炭烤豐後牛。', addr:'大分県別府市駅前町', map:'Hiiragi+Beppu', lat:33.2848, lng:131.5015},
+    {n:'もつ鍋 おおやま 博多本店', c:'food', area:'博多 駅前一番街', hours:'', day:'Day 4 晚餐', note:'博多必吃內臟鍋,家庭友善,小孩可分小碗。', addr:'福岡県福岡市博多区博多駅前3-1-9', map:'Motsunabe+Ooyama+Hakata', lat:33.5905, lng:130.4195},
+    {n:'博多もつ鍋 やま中', c:'food', area:'博多', hours:'', day:'Day 4 備案', note:'味噌系もつ鍋名店。', addr:'福岡県福岡市博多区', map:'Motsunabe+Yamanaka+Hakata', lat:33.5860, lng:130.4090},
+    {n:'拉麵競技場(運河城 B1F)', c:'food', area:'博多 中洲川端', hours:'', day:'Day 3 / Day 5', note:'一風堂、一蘭、博多元助齊聚,給小孩拉麵初體驗。', addr:'福岡県福岡市博多区住吉1-2 キャナルシティ博多', map:'Ramen+Stadium+Canal+City+Hakata', lat:33.5896, lng:130.4109},
+    {n:'カフェアラジン / La Beach', c:'food', area:'海之中道海濱公園內', hours:'', day:'Day 4 午餐', note:'公園內的海邊景觀餐廳,也可買輕食野餐。', addr:'福岡県福岡市東区西戸崎 海の中道海浜公園', map:'Uminonakamichi+Seaside+Park', lat:33.6630, lng:130.3550},
+    {n:'梅の花', c:'food', area:'太宰府 表參道', hours:'', day:'Day 7 午餐', note:'湯葉懷石 / 豆腐料理。表參道還有隈研吾設計的星巴克。', addr:'福岡県太宰府市宰府', map:'Umenohana+Dazaifu', lat:33.5205, lng:130.5340},
+    {n:'Sunset Cafe', c:'food', area:'糸島 海岸', hours:'', day:'Day 6 午餐', note:'海景開放露台 + 沙坑,小孩可放電,平日較好排隊。', addr:'福岡県糸島市志摩桜井', map:'Sunset+Cafe+Itoshima', lat:33.6260, lng:130.2118},
+    {n:'Bistrot Mitsou', c:'food', area:'糸島 海岸', hours:'', day:'Day 6 備案', note:'糸島高人氣法式小館。', addr:'福岡県糸島市', map:'Bistrot+Mitsou+Itoshima', lat:33.6250, lng:130.2100},
+    {n:'CURRENT', c:'food', area:'糸島 海岸', hours:'', day:'Day 6 備案', note:'沖繩風海邊咖啡餐廳。', addr:'福岡県糸島市志摩野北', map:'CURRENT+Itoshima', lat:33.6288, lng:130.2170},
 
     // --- 居酒屋・屋台 ---
-    {n:'鶏と肴', c:'izakaya', area:'福岡 平尾', hours:'17:00-23:00 · 不定期公休', day:'Day 6 晚餐', note:'中央区平尾 1-9-6,雞料理 + 海鮮居酒屋。建議提早訂位並確認當天是否公休,帶小孩坐 17:30 早場最舒服。', map:'鶏と肴+平尾+福岡', isNew:true},
-    {n:'中洲屋台', c:'izakaya', area:'博多 那珂川河畔', hours:'傍晚起', day:'Day 5 晚餐', note:'沿岸 20+ 攤,博多代表夜景。現金為主,早點去佔位。', map:'Nakasu+Yatai'},
+    {n:'鶏と肴', c:'izakaya', area:'福岡 平尾', hours:'17:00-23:00 · 不定期公休', day:'Day 6 晚餐', note:'雞料理 + 海鮮居酒屋。建議提早訂位並確認當天是否公休,帶小孩坐 17:30 早場最舒服。', addr:'福岡県福岡市中央区平尾1-9-6', map:'鶏と肴+平尾+福岡', lat:33.5748, lng:130.4013, isNew:true},
+    {n:'中洲屋台', c:'izakaya', area:'博多 那珂川河畔', hours:'傍晚起', day:'Day 5 晚餐', note:'沿岸 20+ 攤,博多代表夜景。現金為主,早點去佔位。', addr:'福岡県福岡市博多区中洲', map:'Nakasu+Yatai', lat:33.5926, lng:130.4046},
+
+    // --- 玩具・童裝 ---
+    {n:'Nintendo FUKUOKA(皮克敏)', c:'kids', area:'博多 AMU PLAZA 8F', hours:'10:00-20:00(依百貨為準)', day:'Day 7 還車後', note:'任天堂直營店,皮克敏主題。跟 Day 7 傍晚博多站補貨可以一起排。', addr:'福岡県福岡市博多区博多駅中央街1-1 アミュプラザ博多8F', map:'Nintendo+FUKUOKA+Amu+Plaza+Hakata', lat:33.5897, lng:130.4207, isNew:true},
+    {n:'Ultraman World M78 博多', c:'kids', area:'博多 運河城 OPA B1F', hours:'依百貨營業時間', day:'Day 3 / Day 5', note:'鹹蛋超人專賣店,已搬遷到 CANAL CITY OPA 南側 B1F。跟運河城拉麵競技場同一棟。', addr:'福岡県福岡市博多区住吉1-2-22 キャナルシティ博多 サウスビルB1F', map:'Ultraman+World+M78+Hakata', lat:33.5890, lng:130.4113, isNew:true},
+    {n:'三麗鷗 Gallery 博多店', c:'kids', area:'博多 運河城 OPA B1F', hours:'依百貨營業時間', day:'Day 3 / Day 5', note:'大型直營專賣店,在 Center Walk 北側 B1F,跟鹹蛋超人同一棟不同側。', addr:'福岡県福岡市博多区住吉1-2 キャナルシティ博多 センターウォーク北側B1F', map:'Sanrio+Gallery+Hakata+Canal+City', lat:33.5899, lng:130.4107, isNew:true},
+    {n:'三麗鷗(天神 PARCO)', c:'kids', area:'福岡 天神 PARCO', hours:'依百貨營業時間', day:'Day 5', note:'天神 PARCO 6F/7F/8F 的角色商品樓層,逛天神時順路。', addr:'福岡県福岡市中央区天神2-11-1 福岡PARCO', map:'Fukuoka+PARCO+Tenjin', lat:33.5908, lng:130.3990, isNew:true},
+    {n:'童裝 BREEZE', c:'kids', area:'福岡 MARK IS ももち 3F', hours:'依百貨營業時間', day:'Day 7 可加', note:'人氣日系童裝。在 MARK IS 福岡ももち,緊鄰 PayPay 巨蛋,離唐人町住處很近。', addr:'福岡県福岡市中央区地行浜2-2-1 MARK IS 福岡ももち 3F', map:'BREEZE+MARK+IS+Fukuoka+Momochi', lat:33.5940, lng:130.3625, isNew:true},
+    {n:'西松屋 MARK IS 福岡ももち店', c:'kids', area:'福岡 MARK IS ももち 3F', hours:'依百貨營業時間', day:'Day 7 可加', note:'平價育兒用品大賣場,跟 BREEZE 同一層,一次逛完。', addr:'福岡県福岡市中央区地行浜2-2-1 MARK IS 福岡ももち 3F', map:'西松屋+MARK+IS+福岡ももち', lat:33.5940, lng:130.3625, isNew:true},
 
     // --- 選物・購物 ---
-    {n:'H.L.D.', c:'shop', area:'福岡 大名', hours:'', day:'Day 5 彈性', note:'Vitra / Fritz Hansen / Herman Miller 進口家具,九州最大 Vitra 賣場。', map:'H.L.D.+Daimyo+Fukuoka'},
-    {n:'糸島くらし×ここのき', c:'shop', area:'糸島 前原商店街', hours:'', day:'Day 6', note:'糸島在地作家的器皿、木工、編織小物,店內附設タナカフェ。', map:'Itoshima+Kurashi+Kokonoki'},
-    {n:'bbb haus', c:'shop', area:'糸島 玄海国定公園', hours:'', day:'Day 6 彈性', note:'海景咖啡廳 + 生活道具選物店二合一,簡約實用的居家小物。', map:'bbb+haus+Itoshima'},
-    {n:'岩田屋本店', c:'shop', area:'福岡 天神', hours:'', day:'Day 5', note:'1F 專櫃彩妝最齊(SK-II / CPB / Dior / CHANEL / RMK / SUQQU)。', map:'Iwataya+Honten+Tenjin'},
-    {n:'大丸福岡天神店', c:'shop', area:'福岡 天神', hours:'', day:'Day 5', note:'B1-1F 化妝品館,跟岩田屋走路 5 分鐘可互相比價。', map:'Daimaru+Fukuoka+Tenjin'},
-    {n:'天神地下街', c:'shop', area:'福岡 天神', hours:'', day:'Day 5', note:'600m 歐風地下街,下雨天首選。', map:'Tenjin+Underground+Mall'},
-    {n:'AMU PLAZA 博多', c:'shop', area:'博多駅', hours:'', day:'Day 7', note:'B1 Hakata Marche 九州伴手禮一站搞定,8F Pokemon Center。', map:'Amu+Plaza+Hakata'},
-    {n:'由布院フローラルヴィレッジ', c:'shop', area:'由布院', hours:'09:30-17:30', day:'Day 1', note:'英國 Cotswolds 風童話village,約 20 家個性小店。', map:'Yufuin+Floral+Village'},
+    {n:'mont-bell 福岡天神店', c:'shop', area:'福岡 天神', hours:'', day:'Day 5', note:'有賣小孩戶外用品。NTT-KF ビル 1F,天神逛街順路。', addr:'福岡県福岡市中央区天神2-4-38 NTT-KFビル1階', map:'montbell+Fukuoka+Tenjin', lat:33.5893, lng:130.3990, isNew:true},
+    {n:'mont-bell 熊本桜町店', c:'shop', area:'熊本 桜町', hours:'', day:'Day 2 晚上', note:'有賣小孩戶外用品。SAKURA MACHI Kumamoto 2F,離 OMO5 走路可到。', addr:'熊本県熊本市中央区桜町3-10 SAKURA MACHI Kumamoto 2F', map:'montbell+Kumamoto+Sakuramachi', lat:32.8017, lng:130.7063, isNew:true},
+    {n:'mont-bell 南阿蘇店', c:'shop', area:'南阿蘇 道の駅', hours:'', day:'Day 2 順路', note:'有賣小孩戶外用品。在道の駅「あそ望の郷くぎの」內,阿蘇下山往熊本路上可停。', addr:'熊本県阿蘇郡南阿蘇村大字久石2784 道の駅あそ望の郷くぎの内', map:'montbell+Minamiaso', lat:32.8213, lng:131.0122, isNew:true},
+    {n:'Owala(Bonnes Fêtes à deux)', c:'shop', area:'福岡 天神 PARCO 5F', hours:'依百貨營業時間', day:'Day 5', note:'保溫瓶品牌 Owala,在天神 PARCO 5F 的 Bonnes Fêtes à deux 內。', addr:'福岡県福岡市中央区天神2-11-1 福岡PARCO 5F', map:'Fukuoka+PARCO+Tenjin', lat:33.5908, lng:130.3990, isNew:true},
+    {n:'DOUBLEDAY', c:'shop', area:'博多 AMU PLAZA 7F', hours:'10:00-20:00(依百貨為準)', day:'Day 7 還車後', note:'生活雜貨選物店,在 JR 博多城 AMU 7F,跟 Nintendo 同棟不同層。', addr:'福岡県福岡市博多区博多駅中央街1-1 アミュプラザ博多7F', map:'DOUBLEDAY+Amu+Plaza+Hakata', lat:33.5897, lng:130.4207, isNew:true},
+    {n:'H.L.D.', c:'shop', area:'福岡 大名', hours:'', day:'Day 5 彈性', note:'Vitra / Fritz Hansen / Herman Miller 進口家具,九州最大 Vitra 賣場。', addr:'福岡県福岡市中央区大名', map:'H.L.D.+Daimyo+Fukuoka', lat:33.5875, lng:130.3935},
+    {n:'糸島くらし×ここのき', c:'shop', area:'糸島 前原商店街', hours:'', day:'Day 6', note:'糸島在地作家的器皿、木工、編織小物,店內附設タナカフェ。', addr:'福岡県糸島市前原中央3-9-1', map:'Itoshima+Kurashi+Kokonoki', lat:33.5695, lng:130.2005},
+    {n:'bbb haus', c:'shop', area:'糸島 玄海国定公園', hours:'', day:'Day 6 彈性', note:'海景咖啡廳 + 生活道具選物店二合一,簡約實用的居家小物。', addr:'福岡県糸島市志摩野北', map:'bbb+haus+Itoshima', lat:33.6330, lng:130.1880},
+    {n:'岩田屋本店', c:'shop', area:'福岡 天神', hours:'', day:'Day 5', note:'1F 專櫃彩妝最齊(SK-II / CPB / Dior / CHANEL / RMK / SUQQU)。', addr:'福岡県福岡市中央区天神2-5-35', map:'Iwataya+Honten+Tenjin', lat:33.5885, lng:130.3975},
+    {n:'大丸福岡天神店', c:'shop', area:'福岡 天神', hours:'', day:'Day 5', note:'B1-1F 化妝品館,跟岩田屋走路 5 分鐘可互相比價。', addr:'福岡県福岡市中央区天神1-4-1', map:'Daimaru+Fukuoka+Tenjin', lat:33.5875, lng:130.3995},
+    {n:'天神地下街', c:'shop', area:'福岡 天神', hours:'', day:'Day 5', note:'600m 歐風地下街,下雨天首選。', addr:'福岡県福岡市中央区天神2 天神地下街', map:'Tenjin+Underground+Mall', lat:33.5900, lng:130.3995},
+    {n:'AMU PLAZA 博多', c:'shop', area:'博多駅', hours:'10:00-20:00', day:'Day 7', note:'B1 Hakata Marche 九州伴手禮一站搞定,8F Nintendo / Pokemon Center。', addr:'福岡県福岡市博多区博多駅中央街1-1', map:'Amu+Plaza+Hakata', lat:33.5897, lng:130.4207},
+    {n:'由布院フローラルヴィレッジ', c:'shop', area:'由布院', hours:'09:30-17:30', day:'Day 1', note:'英國 Cotswolds 風童話村,約 20 家個性小店。', addr:'大分県由布市湯布院町川上1503-3', map:'Yufuin+Floral+Village', lat:33.2635, lng:131.3540},
 
     // --- 市場・直賣所 ---
-    {n:'伊都菜彩', c:'market', area:'糸島', hours:'', day:'Day 6', note:'九州最大 JA 直賣所,糸島蔬菜、海鮮、雞蛋、限定果醬啤酒。', map:'Ito+Saisai'},
-    {n:'城彩苑', c:'market', area:'熊本城下', hours:'', day:'(已改行程)', note:'熊本城腳下江戶風美食街,這趟 Day 3 改去高千穂後沒排到,有多的時間再考慮。', map:'Sakuranobaba+Johsaien'}
+    {n:'伊都菜彩', c:'market', area:'糸島', hours:'', day:'Day 6', note:'九州最大 JA 直賣所,糸島蔬菜、海鮮、雞蛋、限定果醬啤酒。', addr:'福岡県糸島市波多江567', map:'Ito+Saisai', lat:33.5605, lng:130.2407},
+    {n:'城彩苑', c:'market', area:'熊本城下', hours:'', day:'(未排入)', note:'熊本城腳下江戶風美食街,Day 3 改去高千穂後沒排到,有多的時間再考慮。', addr:'熊本県熊本市中央区二の丸1-1-1', map:'Sakuranobaba+Johsaien', lat:32.8045, lng:130.7068},
+
+    // --- 景點 ---
+    {n:'糸島 トトロの森(芥屋の大門公園)', c:'spot', area:'糸島 芥屋', hours:'全天(公園)', day:'Day 6 可加', note:'樹木交錯成綠色隧道的步道,走 10 分可到展望台看芥屋大門背面。導航打「トトロの森」,停芥屋の大門公園停車場。跟花鹽布丁在同一區,可一起排。', addr:'福岡県糸島市志摩芥屋 芥屋の大門公園内', map:'トトロの森+糸島', lat:33.6197, lng:130.1526, isNew:true}
   ];
 
   const gridEl = document.getElementById('places-grid');
@@ -3314,7 +3443,19 @@
     const qEl = document.getElementById('places-q');
     const filtersEl = document.getElementById('places-filters');
     const countEl = document.getElementById('places-count');
+    const mapWrapEl = document.getElementById('places-map-wrap');
+    const csvBtn = document.getElementById('places-csv');
+    const modeBtns = document.querySelectorAll('.pv-mode');
     let activeCat = 'all';
+    let mode = 'list';
+    let placesMap = null;
+    let markerLayer = null;
+
+    const CAT_LABEL = Object.fromEntries(CATS);
+    const CAT_COLOR = {
+      cafe:'#8a6427', bread:'#96702c', food:'#c1432b', izakaya:'#6f4a8a',
+      kids:'#c94f7c', shop:'#2d4a7c', market:'#5a6b3a', spot:'#0f7b6c'
+    };
 
     filtersEl.innerHTML = CATS.map(([id, label]) =>
       '<button type="button" class="filter-chip' + (id === 'all' ? ' is-active' : '') + '" data-cat="' + id + '">' + label + '</button>'
@@ -3326,28 +3467,30 @@
       return d.innerHTML;
     }
 
-    function renderPlaces(){
+    function matchedPlaces(){
       const q = qEl.value.trim().toLowerCase();
-      const catLabel = Object.fromEntries(CATS);
-      const matched = PLACES.filter(p => {
+      return PLACES.filter(p => {
         if (activeCat !== 'all' && p.c !== activeCat) return false;
         if (!q) return true;
-        return (p.n + ' ' + p.area + ' ' + p.note + ' ' + p.day + ' ' + (catLabel[p.c] || ''))
+        return (p.n + ' ' + p.area + ' ' + p.note + ' ' + p.day + ' ' + (p.addr || '') + ' ' + (CAT_LABEL[p.c] || ''))
           .toLowerCase().includes(q);
       });
+    }
 
-      countEl.textContent = '共 ' + matched.length + ' 間' + (q || activeCat !== 'all' ? '(已篩選,總共 ' + PLACES.length + ' 間)' : '');
+    function gmapUrl(p){
+      return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(p.map);
+    }
 
+    function renderList(matched){
       if (matched.length === 0) {
         gridEl.innerHTML = '<div class="places-empty">找不到符合的店家,換個關鍵字試試。</div>';
         return;
       }
-
       gridEl.innerHTML = matched.map(p =>
         '<div class="place-card">' +
           '<div class="place-top">' +
             '<span class="place-name">' + esc(p.n) + '</span>' +
-            '<span class="place-cat c-' + p.c + '">' + esc(catLabel[p.c] || '') + '</span>' +
+            '<span class="place-cat c-' + p.c + '">' + esc(CAT_LABEL[p.c] || '') + '</span>' +
             (p.isNew ? '<span class="place-new">新</span>' : '') +
           '</div>' +
           '<div class="place-meta">' + esc(p.area) +
@@ -3355,23 +3498,111 @@
             ' <span class="place-day">' + esc(p.day) + '</span>' +
           '</div>' +
           '<div class="place-note">' + esc(p.note) + '</div>' +
-          '<a class="place-map" href="https://www.google.com/maps/search/?api=1&query=' +
-            encodeURIComponent(p.map) + '" target="_blank" rel="noopener">在 Google 地圖開啟 →</a>' +
+          '<a class="place-map" href="' + gmapUrl(p) + '" target="_blank" rel="noopener">在 Google 地圖開啟 →</a>' +
         '</div>'
       ).join('');
     }
 
-    qEl.addEventListener('input', renderPlaces);
+    function ensureMap(){
+      if (placesMap || typeof L === 'undefined') return;
+      placesMap = L.map('places-map', {scrollWheelZoom:false, zoomControl:true}).setView([33.45, 130.75], 8);
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        subdomains:'abcd', maxZoom:19
+      }).addTo(placesMap);
+      markerLayer = L.layerGroup().addTo(placesMap);
+    }
+
+    function renderMap(matched){
+      ensureMap();
+      if (!placesMap) return;
+      markerLayer.clearLayers();
+      const pts = [];
+      matched.forEach(p => {
+        if (typeof p.lat !== 'number' || typeof p.lng !== 'number') return;
+        const color = CAT_COLOR[p.c] || '#c1432b';
+        const icon = L.divIcon({
+          className:'place-pin-wrap',
+          html:'<div class="place-pin" style="background:' + color + '"></div>',
+          iconSize:[18,18], iconAnchor:[9,9], popupAnchor:[0,-10]
+        });
+        L.marker([p.lat, p.lng], {icon})
+          .bindPopup(
+            '<b>' + esc(p.n) + '</b><small>' + esc(p.area) +
+            (p.hours ? ' · ' + esc(p.hours) : '') + ' · ' + esc(p.day) + '</small>' +
+            '<span style="display:block;margin-top:6px;font-family:\'Noto Sans TC\',sans-serif;font-size:12px;line-height:1.5">' + esc(p.note) + '</span>' +
+            '<a href="' + gmapUrl(p) + '" target="_blank" rel="noopener" style="display:inline-block;margin-top:8px;font-size:12px">在 Google 地圖開啟 →</a>'
+          )
+          .addTo(markerLayer);
+        pts.push([p.lat, p.lng]);
+      });
+      setTimeout(() => {
+        placesMap.invalidateSize();
+        if (pts.length > 1) placesMap.fitBounds(pts, {padding:[40,40], maxZoom:14});
+        else if (pts.length === 1) placesMap.setView(pts[0], 15);
+      }, 60);
+    }
+
+    function renderPlacesView(){
+      const matched = matchedPlaces();
+      const filtered = qEl.value.trim() || activeCat !== 'all';
+      countEl.textContent = '共 ' + matched.length + ' 間' +
+        (filtered ? '(已篩選,總共 ' + PLACES.length + ' 間)' : '');
+      if (mode === 'list') renderList(matched);
+      else renderMap(matched);
+    }
+
+    function setMode(next){
+      mode = next;
+      modeBtns.forEach(b => b.classList.toggle('is-active', b.dataset.mode === next));
+      gridEl.hidden = (next !== 'list');
+      mapWrapEl.hidden = (next !== 'map');
+      renderPlacesView();
+    }
+
+    // --- CSV export for Google My Maps ---
+    function toCsv(){
+      const head = ['名稱','分類','地區','地址','緯度','經度','營業時間','排定','備註'];
+      const rows = PLACES.map(p => [
+        p.n, CAT_LABEL[p.c] || '', p.area, p.addr || '', p.lat, p.lng,
+        p.hours || '', p.day || '', p.note || ''
+      ]);
+      return [head].concat(rows).map(r =>
+        r.map(v => '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"').join(',')
+      ).join('\r\n');
+    }
+
+    csvBtn.addEventListener('click', () => {
+      const blob = new Blob(['﻿' + toCsv()], {type:'text/csv;charset=utf-8;'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'fukuoka-2026-places.csv';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    });
+
+    qEl.addEventListener('input', renderPlacesView);
     filtersEl.addEventListener('click', (e) => {
       const chip = e.target.closest('.filter-chip');
       if (!chip) return;
       activeCat = chip.dataset.cat;
       filtersEl.querySelectorAll('.filter-chip').forEach(c =>
         c.classList.toggle('is-active', c === chip));
-      renderPlaces();
+      renderPlacesView();
+    });
+    modeBtns.forEach(b => b.addEventListener('click', () => setMode(b.dataset.mode)));
+
+    // resize map when the section becomes visible again
+    document.querySelectorAll('[data-view="places"]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (mode === 'map') setTimeout(() => { if (placesMap) placesMap.invalidateSize(); }, 120);
+      });
     });
 
-    renderPlaces();
+    setMode('list');
   }
 
   const STORAGE_KEY = 'fukuoka2026_packing_v1';
