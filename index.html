@@ -1139,6 +1139,52 @@
   .pv-mode + .pv-mode{border-left:1px solid var(--line)}
   .pv-mode:hover{color:var(--vermillion)}
   .pv-mode.is-active{background:var(--ink);color:var(--paper)}
+  .places-locate, .places-sort{
+    padding:8px 16px;
+    font-size:12px;
+    font-family:'Shippori Mincho', serif;
+    border:1px solid var(--line);
+    background:rgba(255,255,255,0.7);
+    color:var(--ink-soft);
+    border-radius:2px;
+    cursor:pointer;
+    transition:all 0.2s ease;
+    white-space:nowrap;
+  }
+  .places-locate:hover, .places-sort:hover{border-color:var(--vermillion);color:var(--vermillion)}
+  .places-locate.is-active{background:#1a73e8;border-color:#1a73e8;color:#fff}
+  .places-locate.is-busy{opacity:0.6;cursor:progress}
+  .places-sort.is-active{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+  .places-geo-msg{
+    margin:-6px 0 16px;
+    padding:10px 14px;
+    font-size:12.5px;
+    line-height:1.6;
+    border-radius:3px;
+    background:rgba(193,67,43,0.08);
+    border:1px solid rgba(193,67,43,0.25);
+    color:var(--ink-soft);
+  }
+  .places-geo-msg a{color:var(--indigo)}
+  .place-dist{
+    display:inline-block;
+    font-size:11px;
+    font-family:'Shippori Mincho', serif;
+    color:#1a5fb4;
+    border:1px solid rgba(26,115,232,0.4);
+    background:rgba(26,115,232,0.07);
+    padding:1px 8px;
+    border-radius:99px;
+    white-space:nowrap;
+  }
+  .user-dot{
+    width:16px;
+    height:16px;
+    border-radius:50%;
+    background:#1a73e8;
+    border:3px solid #fff;
+    box-shadow:0 0 0 1px rgba(26,115,232,0.5), 0 2px 6px rgba(0,0,0,0.35);
+  }
   .places-csv{
     margin-left:auto;
     padding:8px 16px;
@@ -3043,9 +3089,12 @@
       <button type="button" class="pv-mode is-active" data-mode="list">清單</button>
       <button type="button" class="pv-mode" data-mode="map">地圖</button>
     </div>
+    <button type="button" class="places-locate" id="places-locate">◎ 定位我</button>
+    <button type="button" class="places-sort" id="places-sort" hidden>↕ 依距離排序</button>
     <span class="places-count" id="places-count"></span>
     <button type="button" class="places-csv" id="places-csv">↓ 匯出 CSV(給 Google 我的地圖)</button>
   </div>
+  <div class="places-geo-msg" id="places-geo-msg" hidden></div>
 
   <div class="places-map-wrap" id="places-map-wrap" hidden>
     <div id="places-map"></div>
@@ -3450,6 +3499,13 @@
     let mode = 'list';
     let placesMap = null;
     let markerLayer = null;
+    let userPos = null;          // {lat, lng, acc}
+    let watchId = null;
+    let sortByDist = false;
+    let userMarker = null, userCircle = null;
+    const locateBtn = document.getElementById('places-locate');
+    const sortBtn = document.getElementById('places-sort');
+    const geoMsgEl = document.getElementById('places-geo-msg');
 
     const CAT_LABEL = Object.fromEntries(CATS);
     const CAT_COLOR = {
@@ -3467,14 +3523,44 @@
       return d.innerHTML;
     }
 
+    // --- geolocation helpers ---
+    function distMeters(aLat, aLng, bLat, bLng){
+      const R = 6371000, toRad = d => d * Math.PI / 180;
+      const dLat = toRad(bLat - aLat), dLng = toRad(bLng - aLng);
+      const s = Math.sin(dLat/2)**2 +
+        Math.cos(toRad(aLat)) * Math.cos(toRad(bLat)) * Math.sin(dLng/2)**2;
+      return 2 * R * Math.asin(Math.sqrt(s));
+    }
+
+    function fmtDist(m){
+      if (m == null) return '';
+      if (m < 950) return Math.round(m / 10) * 10 + ' m';
+      if (m < 100000) return (m / 1000).toFixed(1) + ' km';
+      return Math.round(m / 1000) + ' km';
+    }
+
+    function distTo(p){
+      if (!userPos || typeof p.lat !== 'number') return null;
+      return distMeters(userPos.lat, userPos.lng, p.lat, p.lng);
+    }
+
     function matchedPlaces(){
       const q = qEl.value.trim().toLowerCase();
-      return PLACES.filter(p => {
+      const list = PLACES.filter(p => {
         if (activeCat !== 'all' && p.c !== activeCat) return false;
         if (!q) return true;
         return (p.n + ' ' + p.area + ' ' + p.note + ' ' + p.day + ' ' + (p.addr || '') + ' ' + (CAT_LABEL[p.c] || ''))
           .toLowerCase().includes(q);
       });
+      if (sortByDist && userPos) {
+        return list.slice().sort((a, b) => {
+          const da = distTo(a), db = distTo(b);
+          if (da == null) return 1;
+          if (db == null) return -1;
+          return da - db;
+        });
+      }
+      return list;
     }
 
     function gmapUrl(p){
@@ -3496,6 +3582,7 @@
           '<div class="place-meta">' + esc(p.area) +
             (p.hours ? '<span class="sep">|</span>' + esc(p.hours) : '') +
             ' <span class="place-day">' + esc(p.day) + '</span>' +
+            (distTo(p) != null ? ' <span class="place-dist">◎ ' + fmtDist(distTo(p)) + '</span>' : '') +
           '</div>' +
           '<div class="place-note">' + esc(p.note) + '</div>' +
           '<a class="place-map" href="' + gmapUrl(p) + '" target="_blank" rel="noopener">在 Google 地圖開啟 →</a>' +
@@ -3529,13 +3616,18 @@
         L.marker([p.lat, p.lng], {icon})
           .bindPopup(
             '<b>' + esc(p.n) + '</b><small>' + esc(p.area) +
-            (p.hours ? ' · ' + esc(p.hours) : '') + ' · ' + esc(p.day) + '</small>' +
+            (p.hours ? ' · ' + esc(p.hours) : '') + ' · ' + esc(p.day) +
+            (distTo(p) != null ? ' · 距離約 ' + fmtDist(distTo(p)) : '') + '</small>' +
             '<span style="display:block;margin-top:6px;font-family:\'Noto Sans TC\',sans-serif;font-size:12px;line-height:1.5">' + esc(p.note) + '</span>' +
             '<a href="' + gmapUrl(p) + '" target="_blank" rel="noopener" style="display:inline-block;margin-top:8px;font-size:12px">在 Google 地圖開啟 →</a>'
           )
           .addTo(markerLayer);
         pts.push([p.lat, p.lng]);
       });
+      if (userPos) {
+        drawUserOnMap(false);
+        pts.push([userPos.lat, userPos.lng]);   // 一起入鏡,才看得出自己跟店家的相對位置
+      }
       setTimeout(() => {
         placesMap.invalidateSize();
         if (pts.length > 1) placesMap.fitBounds(pts, {padding:[40,40], maxZoom:14});
@@ -3559,6 +3651,106 @@
       mapWrapEl.hidden = (next !== 'map');
       renderPlacesView();
     }
+
+    // --- geolocation: show me on the map ---
+    function showGeoMsg(html){
+      geoMsgEl.innerHTML = html;
+      geoMsgEl.hidden = false;
+    }
+
+    function drawUserOnMap(firstFix){
+      if (!placesMap || !userPos) return;
+      if (!userMarker) {
+        userMarker = L.marker([userPos.lat, userPos.lng], {
+          icon: L.divIcon({className:'user-dot-wrap', html:'<div class="user-dot"></div>',
+            iconSize:[16,16], iconAnchor:[8,8], popupAnchor:[0,-10]}),
+          zIndexOffset: 1000
+        }).bindPopup('<b>你在這裡</b>').addTo(placesMap);
+        userCircle = L.circle([userPos.lat, userPos.lng], {
+          radius: userPos.acc || 30, color:'#1a73e8', weight:1,
+          fillColor:'#1a73e8', fillOpacity:0.12
+        }).addTo(placesMap);
+      } else {
+        userMarker.setLatLng([userPos.lat, userPos.lng]);
+        userCircle.setLatLng([userPos.lat, userPos.lng]).setRadius(userPos.acc || 30);
+      }
+      if (firstFix) placesMap.setView([userPos.lat, userPos.lng], 15);
+    }
+
+    function onGeoOk(pos, firstFix){
+      userPos = {lat: pos.coords.latitude, lng: pos.coords.longitude, acc: pos.coords.accuracy};
+      locateBtn.classList.remove('is-busy');
+      locateBtn.classList.add('is-active');
+      locateBtn.textContent = '◎ 定位中(持續更新)';
+      sortBtn.hidden = false;
+      geoMsgEl.hidden = true;
+      if (firstFix) {
+        sortByDist = true;
+        sortBtn.classList.add('is-active');
+      }
+      if (mode === 'map') { ensureMap(); drawUserOnMap(firstFix); }
+      renderPlacesView();
+    }
+
+    function onGeoErr(err){
+      locateBtn.classList.remove('is-busy', 'is-active');
+      locateBtn.textContent = '◎ 定位我';
+      let msg;
+      if (err && err.code === 1) {
+        msg = '<strong>定位被拒絕。</strong>請在瀏覽器網址列的鎖頭圖示裡把「位置」改成允許,再按一次定位。';
+      } else if (err && err.code === 3) {
+        msg = '<strong>定位逾時。</strong>室內或地下街訊號較差,走到窗邊或戶外再試一次。';
+      } else {
+        msg = '<strong>拿不到定位。</strong>請確認手機已開啟定位服務。';
+      }
+      showGeoMsg(msg);
+    }
+
+    function startLocate(){
+      if (!navigator.geolocation) {
+        showGeoMsg('<strong>這個瀏覽器不支援定位。</strong>');
+        return;
+      }
+      if (!window.isSecureContext) {
+        showGeoMsg('<strong>目前的開啟方式不能定位。</strong>瀏覽器只允許 HTTPS 網頁取得位置。' +
+          '請改用 <a href="https://dreamswish10.github.io/fukuoka-2026/" target="_blank" rel="noopener">https://dreamswish10.github.io/fukuoka-2026/</a> 開啟(建議在手機上加到主畫面)。');
+        return;
+      }
+      locateBtn.classList.add('is-busy');
+      locateBtn.textContent = '◎ 定位中…';
+      let first = true;
+      watchId = navigator.geolocation.watchPosition(
+        (pos) => { onGeoOk(pos, first); first = false; },
+        onGeoErr,
+        {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000}
+      );
+    }
+
+    function stopLocate(){
+      if (watchId != null) navigator.geolocation.clearWatch(watchId);
+      watchId = null;
+      userPos = null;
+      sortByDist = false;
+      sortBtn.hidden = true;
+      sortBtn.classList.remove('is-active');
+      locateBtn.classList.remove('is-active', 'is-busy');
+      locateBtn.textContent = '◎ 定位我';
+      geoMsgEl.hidden = true;
+      if (placesMap && userMarker) placesMap.removeLayer(userMarker);
+      if (placesMap && userCircle) placesMap.removeLayer(userCircle);
+      userMarker = null; userCircle = null;
+      renderPlacesView();
+    }
+
+    locateBtn.addEventListener('click', () => {
+      if (watchId != null) stopLocate(); else startLocate();
+    });
+
+    sortBtn.addEventListener('click', () => {
+      sortByDist = !sortByDist;
+      sortBtn.classList.toggle('is-active', sortByDist);
+      renderPlacesView();
+    });
 
     // --- CSV export for Google My Maps ---
     function toCsv(){
